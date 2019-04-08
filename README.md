@@ -14,6 +14,27 @@ This plugin requires Craft CMS 3.0.0 or later.
 
 You can also install Complete Cookie Consent via the **Plugin Store** in the Craft Control Panel.
 
+## Setup
+Using the plugin's settings page, you have total control over the appearance and functionality of your cookie consent banner:
+
+  * Activate and de-activate the banner from the plugin settings page
+  * Only show the banner for logged in admins, for testing purposes
+  * Change the colors of the banner and banner button
+  * Change the text of the banner title, banner text and button text
+  * Include the plugin's CSS to give your banner a base style, or use your own CSS
+  * Choose a position for the banner: top, right, bottom, left or center
+  * Change the name and expiration time for the preferences cookie
+  * Change cookie types, make cookie types required or checked by default
+  * Add geolocation to your cookie consent process by adding a [ipApi](https://ipapi.com/) API key: only show the banner to EU visitors
+  
+![Banner screenshot](resources/img/settings-cookietypes.png)
+
 ## Usage
 
 After you've installed the plugin, and activated the cookie consent banner, the banner will be shown on your site. Depending on your setup, an external geolocation API will be used to determine if a cookie banner is needed. 
+
+![Banner screenshot](resources/img/cookie-banner.png)
+
+### Thank you!
+
+  * [NYStudio107](https://github.com/nystudio107), for all the work you put in your plugins and the blog posts you write. Writing plugins is easier with your code as guidance.
