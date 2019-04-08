@@ -13,6 +13,13 @@
         margin: 0 0 1rem 0;
     }
 
+    &--left,
+    &--right {
+        label {
+            display: block;
+        }
+    }
+
     &--top {
         top: 0;
         left: 0;
