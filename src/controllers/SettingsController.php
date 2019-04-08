@@ -29,6 +29,10 @@ class SettingsController extends Controller
         // Set tabs
         $variables['tabs'] = [
             [
+                'label' => Craft::t('complete-cookie-consent', 'General'),
+                'url' => '#general',
+            ],
+            [
                 'label' => Craft::t('complete-cookie-consent', 'Appearance'),
                 'url' => '#appearance',
             ],
@@ -39,6 +43,10 @@ class SettingsController extends Controller
             [
                 'label' => Craft::t('complete-cookie-consent', 'Cookie settings'),
                 'url' => '#cookies',
+            ],
+            [
+                'label' => Craft::t('complete-cookie-consent', 'Geolocation'),
+                'url' => '#geo',
             ],
         ];
 
@@ -64,12 +72,14 @@ class SettingsController extends Controller
                 ->one();
 
             if (!$settingsRecord) {
-                $settingsRecord = new Settings();
+                $settingsRecord = new SettingsRecord();
                 $settingsRecord->siteId = $siteId;
             }
 
             $settingsRecord->settings = json_encode($settingsModel);
-            $settingsRecord->save();
+            if ($settingsRecord->save()) {
+                Craft::$app->getSession()->setNotice(Craft::t('complete-cookie-consent', 'Cookie consent preferences have been saved'));
+            }
 
             return $this->redirectToPostedUrl();
         }

@@ -21,6 +21,6 @@ class Install extends Migration
 
     public function safeDown()
     {
-
+        $this->dropTable('{{%completecookieconsent_settings}}');
     }
 }

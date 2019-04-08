@@ -1,7 +1,7 @@
 <template>
-    <div :class="['ccc-banner', positionClass]" :style="{ backgroundColor: bannerBackgroundColor }">
-        <h3 class="ccc-banner__title">{{ title }}</h3>
-        <p class="ccc-banner__description">{{ text }}</p>
+    <div v-if="showBanner" :class="['ccc-banner', positionClass]" :style="{ backgroundColor: bannerBackgroundColor }">
+        <h3 class="ccc-banner__title" v-html="title"></h3>
+        <p class="ccc-banner__description" v-html="text"></p>
 
         <form method="POST">
             <input type="hidden" :name="csrfName" :value="csrfValue" />
@@ -20,6 +20,7 @@
     export default {
         data() {
             return {
+                showBanner: !ccc.consentSubmitted,
                 title: cccSettings.bannerTitle,
                 text: cccSettings.bannerText,
                 buttonColor: cccSettings.bannerButtonColor,

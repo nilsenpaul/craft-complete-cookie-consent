@@ -21,12 +21,13 @@
 
     <div id="fields">
         <div>
-            <div id="appearance">
+            <div id="general">
                 {{ forms.lightswitchField({
-                    label: 'Include CSS' |t('complete-cookie-consent'),
-                    instructions: 'Set to true if you want some base CSS to be loaded for the banner, of set to false if you use your own CSS' |t('complete-cookie-consent'),
-                    name: 'includeCss',
-                    on: settings.includeCss,
+                    first: true,
+                    label: 'Activate cookie consent' |t('complete-cookie-consent'),
+                    instructions: 'Use this setting to toggle this plugin off and on' |t('complete-cookie-consent'),
+                    name: 'pluginIsActive',
+                    on: settings.pluginIsActive,
                 }) }}
 
                 {{ forms.lightswitchField({
@@ -35,7 +36,15 @@
                     name: 'onlyShowAdmins',
                     on: settings.onlyShowAdmins,
                 }) }}
-
+            </div>
+            <div id="appearance" class="hidden">
+                {{ forms.lightswitchField({
+                    first: true,
+                    label: 'Include CSS' |t('complete-cookie-consent'),
+                    instructions: 'Set to true if you want some base CSS to be loaded for the banner, of set to false if you use your own CSS' |t('complete-cookie-consent'),
+                    name: 'includeCss',
+                    on: settings.includeCss,
+                }) }}
 
                 {{ forms.selectField({
                     label: 'Banner position' |t('complete-cookie-consent'),
@@ -51,7 +60,6 @@
                     },
                     value: settings.bannerPosition,
                 }) }}
-
 
                 {{ forms.colorField({
                     label: 'Banner color' |t('complete-cookie-consent'),
@@ -76,7 +84,6 @@
                     name: 'bannerButtonTextColor',
                     value: settings.bannerButtonTextColor,
                 }) }}
-
             </div>
             <div id="text" class="hidden">
                 {{ forms.textField({
@@ -112,11 +119,21 @@
             </div>
             <div id="cookies" class="hidden">
                 {{ forms.textField({
+                    first: true,
                     label: 'Cookie name' |t('complete-cookie-consent'),
                     required: true,
-                    instructions: 'The name of the cookie we use to store cookie preferences. Changing this would cause the banner to be shown to EVERY user again' |t('complete-cookie-consent'),
+                    instructions: 'The name of the cookie we use to store cookie preferences' |t('complete-cookie-consent'),
                     name: 'cookieName',
                     value: settings.cookieName,
+                    warning: 'Changing this would mean that all previous cookie preferences will be "forgotten"' |t('complete-cookie-consent'),
+                }) }}
+
+                {{ forms.textField({
+                    label: 'Remember visitor settings for ...' |t('complete-cookie-consent'),
+                    instructions: 'How long will the visitor\'s browser remember cookie preferences (in seconds)?' |t('complete-cookie-consent'),
+                    name: 'rememberFor',
+                    type: 'number',
+                    value: settings.rememberFor,
                 }) }}
 
                 {{ forms.lightswitchField({
@@ -133,6 +150,7 @@
                     instructions: 'For what cookie groups can your visitors give consent?' |t('complete-cookie-consent'),
                     name: 'cookieTypes',
                     rows: settings.cookieTypes,
+                    warning: 'If you change a type\'s handle, all previous preferences for that cookie type will be lost' |t('complete-cookie-consent'),
                     cols: {
                         handle: {
                             heading: 'Handle',
@@ -157,6 +175,21 @@
                     },
                 }) }}
             </div>
+            <div id="geo" class="hidden">
+                {{ forms.lightswitchField({
+                    first: true,
+                    label: 'Use ipApi for geolocation' |t('complete-cookie-consent'),
+                    instructions: 'Using [ipApi](https://ipapi.com), we can show the banner to visitors with EU IP addresses. For this to work, you\'ll need an API key' |t('complete-cookie-consent'),
+                    name: 'useIpApi',
+                    on: settings.useIpApi,
+                    }) }}
+
+                {{ forms.textField({
+                    label: 'ipApi API key' |t('complete-cookie-consent'),
+                    instructions: 'We use ipApi to lookup the visitor\'s location. Please enter your API key. If no API key is set, all visitors will see the cookie banner' |t('complete-cookie-consent'),
+                    name: 'ipApiKey',
+                    value: settings.ipApiKey,
+                }) }}
         </div>
     </div>
 {% endblock %}
