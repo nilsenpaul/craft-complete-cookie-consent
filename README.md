@@ -35,6 +35,22 @@ After you've installed the plugin, and activated the cookie consent banner, the 
 
 ![Banner screenshot](resources/img/cookie-banner.png)
 
+### Honoring your visitor's cookie preferences
+
+Cookie consent wouldn't be of much use if you wouldn't act upon the preferences of your users. That's why the `ccc` JavaScript object is set, containing the preferences of the current visitor:
+
+    console.log(ccc.consentSubmitted)
+    # prints true or false
+    
+    console.log(ccc.consent.[cookieTypeHandle])
+    # prints true or false, depending on your visitor's choice
+    
+You can use these values to load (or prevent loading of) whatever you want.
+
 ### Thank you!
 
   * [NYStudio107](https://github.com/nystudio107), for all the work you put in your plugins and the blog posts you write. Writing plugins is easier with your code as guidance.
+
+### TO-DO
+ * More JS examples, for example how to prevend Google Tag Manager from loading if consent is not given
+ * Simple statistics, to know how the cookie banner effects your site
