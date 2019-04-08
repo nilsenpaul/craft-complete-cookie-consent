@@ -102,12 +102,14 @@
                     rows: 2,
                 }) }}
 
+                {#
                 {{ forms.textField({
                     label: '"Toggle all" text' |t('complete-cookie-consent'),
                     instructions: 'The text shown next to the toggle all checkbox' |t('complete-cookie-consent'),
                     name: 'toggleAllText',
                     value: settings.toggleAllText,
                 }) }}
+                #}
 
                 {{ forms.textField({
                     label: 'Banner button text' |t('complete-cookie-consent'),
@@ -136,12 +138,14 @@
                     value: settings.rememberFor,
                 }) }}
 
+                {#
                 {{ forms.lightswitchField({
                     label: 'Toggle all' |t('complete-cookie-consent'),
                     instructions: 'Set to true if you want to allow visitors to toggle all cookie groups at once' |t('complete-cookie-consent'),
                     name: 'showToggleAll',
                     on: settings.showToggleAll,
                 }) }}
+                #}
 
                 {{ forms.editableTableField({
                     id: 'cookie-types',
