@@ -112,6 +112,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -642,7 +643,7 @@ var render = function() {
             attrs: {
               type: "hidden",
               name: "action",
-              value: "complete-cookie-consent/submit-consent"
+              value: "complete-cookie-consent/consent/submit"
             }
           }),
           _vm._v(" "),
@@ -651,6 +652,17 @@ var render = function() {
               "label",
               { key: type.handle, attrs: { for: "cookieType-" + type.handle } },
               [
+                type.required
+                  ? _c("input", {
+                      attrs: {
+                        type: "hidden",
+                        name: "cookieTypes[]",
+                        value: "1"
+                      },
+                      domProps: { value: type.handle }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("input", {
                   attrs: {
                     id: "cookieType-" + type.handle,
