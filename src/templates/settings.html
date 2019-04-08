@@ -1,0 +1,162 @@
+{% import "_includes/forms" as forms %}
+
+{% extends '_layouts/cp' %}
+
+{% set title = 'Complete Cookie Consent' |t %}
+{% set fullPageForm = true %}
+
+{% block contextMenu %}
+    {% include 'complete-cookie-consent/_includes/site-settings' %}
+{% endblock %}
+
+{% block actionButton %}
+    <div class="btngroup">
+        <input type="submit" class="btn submit" value="{{ 'Save'|t('app') }}">
+    </div>
+{% endblock %}
+
+{% block content %}
+    <input type="hidden" name="action" value="complete-cookie-consent/settings/save">
+    <input type="hidden" name="siteId" value="{{ currentSiteId }}">
+
+    <div id="fields">
+        <div>
+            <div id="appearance">
+                {{ forms.lightswitchField({
+                    label: 'Include CSS' |t('complete-cookie-consent'),
+                    instructions: 'Set to true if you want some base CSS to be loaded for the banner, of set to false if you use your own CSS' |t('complete-cookie-consent'),
+                    name: 'includeCss',
+                    on: settings.includeCss,
+                }) }}
+
+                {{ forms.lightswitchField({
+                    label: 'Only show to admins' |t('complete-cookie-consent'),
+                    instructions: 'Set to true if you want the banner to be shown to logged in admins only (for testing purposes)' |t('complete-cookie-consent'),
+                    name: 'onlyShowAdmins',
+                    on: settings.onlyShowAdmins,
+                }) }}
+
+
+                {{ forms.selectField({
+                    label: 'Banner position' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'Where should the banner be positioned?' |t('complete-cookie-consent'),
+                    name: 'bannerPosition',
+                    options: {
+                        top: 'Top' |t('complete-cookie-consent'),
+                        right: 'Right' |t('complete-cookie-consent'),
+                        bottom: 'Bottom' |t('complete-cookie-consent'),
+                        left: 'Left' |t('complete-cookie-consent'),
+                        center: 'Center' |t('complete-cookie-consent'),
+                    },
+                    value: settings.bannerPosition,
+                }) }}
+
+
+                {{ forms.colorField({
+                    label: 'Banner color' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'What color should your cookie banner be?' |t('complete-cookie-consent'),
+                    name: 'bannerColor',
+                    value: settings.bannerColor,
+                }) }}
+
+                {{ forms.colorField({
+                    label: 'Banner button color' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'What color should the button be?' |t('complete-cookie-consent'),
+                    name: 'bannerButtonColor',
+                    value: settings.bannerButtonColor,
+                }) }}
+
+                {{ forms.colorField({
+                    label: 'Banner button text color' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'What color should the button text be?' |t('complete-cookie-consent'),
+                    name: 'bannerButtonTextColor',
+                    value: settings.bannerButtonTextColor,
+                }) }}
+
+            </div>
+            <div id="text" class="hidden">
+                {{ forms.textField({
+                    first: true,
+                    label: 'Banner title' |t('complete-cookie-consent'),
+                    instructions: 'Enter a banner title for this site. Can be empty, markdown allowed.' |t('complete-cookie-consent'),
+                    name: 'bannerTitle',
+                    value: settings.bannerTitle,
+                }) }}
+
+                {{ forms.textField({
+                    label: 'Banner text' |t('complete-cookie-consent'),
+                    instructions: 'Enter a banner text for this site. Can be empty, markdown allowed.' |t('complete-cookie-consent'),
+                    name: 'bannerText',
+                    value: settings.bannerText,
+                    rows: 2,
+                }) }}
+
+                {{ forms.textField({
+                    label: '"Toggle all" text' |t('complete-cookie-consent'),
+                    instructions: 'The text shown next to the toggle all checkbox' |t('complete-cookie-consent'),
+                    name: 'toggleAllText',
+                    value: settings.toggleAllText,
+                }) }}
+
+                {{ forms.textField({
+                    label: 'Banner button text' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'The text on the banner\'s button' |t('complete-cookie-consent'),
+                    name: 'bannerButtonText',
+                    value: settings.bannerButtonText,
+                }) }}
+            </div>
+            <div id="cookies" class="hidden">
+                {{ forms.textField({
+                    label: 'Cookie name' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'The name of the cookie we use to store cookie preferences. Changing this would cause the banner to be shown to EVERY user again' |t('complete-cookie-consent'),
+                    name: 'cookieName',
+                    value: settings.cookieName,
+                }) }}
+
+                {{ forms.lightswitchField({
+                    label: 'Toggle all' |t('complete-cookie-consent'),
+                    instructions: 'Set to true if you want to allow visitors to toggle all cookie groups at once' |t('complete-cookie-consent'),
+                    name: 'showToggleAll',
+                    on: settings.showToggleAll,
+                }) }}
+
+                {{ forms.editableTableField({
+                    id: 'cookie-types',
+                    label: 'Cookie types' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'For what cookie groups can your visitors give consent?' |t('complete-cookie-consent'),
+                    name: 'cookieTypes',
+                    rows: settings.cookieTypes,
+                    cols: {
+                        handle: {
+                            heading: 'Handle',
+                            type: 'text',
+                            info: 'This cookie group\'s reference' |t('complete-cookie-consent'),
+                        },
+                        name: {
+                            heading: 'Name',
+                            type: 'text',
+                            info: 'The name for this cookie group, visible to your visitors' |t('complete-cookie-consent'),
+                        },
+                        defaultOn: {
+                            heading: 'Default on',
+                            type: 'lightswitch',
+                            info: 'Set this to true if this cookie group is checked by default' |t('complete-cookie-consent'),
+                        },
+                        required: {
+                            heading: 'Required',
+                            type: 'lightswitch',
+                            info: 'Set this to true if the visitor should not be allowed to refuse cookies in this group' |t('complete-cookie-consent'),
+                        },
+                    },
+                }) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
