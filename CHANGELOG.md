@@ -1,5 +1,9 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.4.1 - 2019.04.09
+### Fix
+- Fixed a bug where setting geolocation method to 'none' was impossible
+
 ## 1.0.4 - 2019.04.09
 ### Added
 - Added GeoIpLite as a geolocation method
