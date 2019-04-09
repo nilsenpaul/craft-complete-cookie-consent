@@ -14,6 +14,8 @@ use yii\web\Response;
 
 class SettingsController extends Controller
 {
+    public $allowAnonymous = ['update-ip-database'];
+
     public function actionIndex(string $siteHandle = null): Response
     {
         $variables = [];
@@ -149,4 +151,9 @@ class SettingsController extends Controller
         return $siteId;
     }
 
+    public function actionUpdateIpDatabase()
+    {
+        Plugin::$instance->geo->updateGeoIpLiteDatabase();
+        exit;
+    }
 }

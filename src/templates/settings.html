@@ -192,13 +192,18 @@
                 }) }}
             </div>
             <div id="geo" class="hidden">
-                {{ forms.lightswitchField({
-                    first: true,
-                    label: 'Use ipApi for geolocation' |t('complete-cookie-consent'),
-                    instructions: 'Using [ipApi](https://ipapi.com), we can show the banner to visitors with EU IP addresses. For this to work, you\'ll need an API key' |t('complete-cookie-consent'),
-                    name: 'useIpApi',
-                    on: settings.useIpApi,
-                    }) }}
+                {{ forms.selectField({
+                    label: 'Geolocation method' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'What method should the plugin use to determine a visitor\'s country?' |t('complete-cookie-consent'),
+                    name: 'geolocationMethod',
+                    options: {
+                        none: 'No geolocation, ignore the visitor\'s location' |t('complete-cookie-consent'),
+                        geoIpLite: 'Maxmind GeoIpLite' |t('complete-cookie-consent'),
+                        ipApi: 'ipApi.com (API key required)' |t('complete-cookie-consent'),
+                    },
+                    value: settings.geolocationMethod,
+                }) }}
 
                 {{ forms.textField({
                     label: 'ipApi API key' |t('complete-cookie-consent'),

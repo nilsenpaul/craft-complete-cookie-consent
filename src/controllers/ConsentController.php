@@ -39,7 +39,7 @@ class ConsentController extends Controller
     {
         return $this->asJson([
             'consentInfo' => Plugin::$instance->consent->getInfo(),
-            'pluginSettings' => Plugin::$instance->getSettings(),
+            'pluginSettings' => Plugin::$instance->getSettings()->forFrontend(),
             'isFirstVisit' => Plugin::$instance->cookies->isFirstVisit(),
             'csrfTokenName' => Craft::$app->getConfig()->general->csrfTokenName,
             'csrfTokenValue' => Craft::$app->getRequest()->csrfToken,
@@ -53,19 +53,14 @@ class ConsentController extends Controller
         $devMode = Craft::$app->getConfig()->general->devMode;
         $ip = Craft::$app->getRequest()->remoteIp;
 
-        // Local IP or devMode? Always show the banner
-        if (\in_array($ip, Plugin::$instance->localIps) || $devMode) {
+        // Skip this part on local IPs or devMode
+        if (in_array($ip, Plugin::$instance->localIps) || $devMode) {
             return true;
         }
 
         // Only admin and not a logged in admin?
         if ($settings->onlyShowAdmins && !Craft::$app->user->isAdmin) {
             return false;
-        }
-
-        // With the Geo API turned off, there's no way to determine if the banner should be visible. Always show it.
-        if (!$settings->useIpApi) {
-            return true;
         }
 
         return Plugin::$instance->geo->isEuropeanCountry();

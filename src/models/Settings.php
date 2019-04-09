@@ -27,6 +27,21 @@ class Settings extends Model
     public $cookieTypes;
     public $useIpApi = false;
     public $ipApiKey;
+    public $geolocationMethod = 'geoIpLite';
+
+    protected $publicAttributes = [
+        'consentType',
+        'bannerColor',
+        'bannerTitle',
+        'bannerText',
+        'bannerButtonText',
+        'bannerButtonColor',
+        'bannerButtonTextColor',
+        'bannerPosition',
+        'showToggleAll',
+        'toggleAllText',
+        'cookieTypes',
+    ];
 
     public function init()
     {
@@ -57,6 +72,11 @@ class Settings extends Model
                 'required' => false,
             ],
         ];
+
+        // Set geolocationMethod to ipApi if it was previously selected
+        if ($this->useIpApi) {
+            $this->geolocationMethod = 'ipApi';
+        }
     }
 
     public function rules()
@@ -66,6 +86,7 @@ class Settings extends Model
             [['bannerColor', 'bannerButtonColor', 'bannerButtonText', 'cookieTypes', 'cookieName'], 'required'],
             [['bannerPosition'], 'in', 'range' => ['top', 'left', 'bottom', 'right', 'center']],
             [['consentType'], 'in', 'range' => ['implied', 'explicit']],
+            [['geolocationMethod'], 'in', 'range' => ['geoIpLite', 'ipApi']],
             [['rememberFor'], 'number'],
             [[
                 'useIpApi',
@@ -82,4 +103,14 @@ class Settings extends Model
         ];
     }
 
+    public function forFrontend()
+    {
+        $publicSettings = [];
+
+        foreach ($this->publicAttributes as $attribute) {
+            $publicSettings[$attribute] = $this->{$attribute};
+        }
+
+        return $publicSettings;
+    }
 }
