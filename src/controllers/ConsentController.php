@@ -22,8 +22,14 @@ class ConsentController extends Controller
         $checkedCookieTypes = $request->post()['cookieTypes'];
 
         // Save new cookie settings to a cookie
-        Plugin::$instance->cookies->set($checkedCookieTypes);
+        $cookieTypesWithConsent = [];
+        foreach ($settings->cookieTypes as $cookieType) {
+            if ($cookieType['required'] || \in_array($cookieType['handle'], $checkedCookieTypes)) {
+                $cookieTypesWithConsent[] = $cookieType['handle'];
+            }
+        }
 
+        Plugin::$instance->cookies->set($cookieTypesWithConsent);
         Craft::$app->getSession()->setNotice(Craft::t('complete-cookie-consent', 'Cookie preferences have been saved'));
 
         return $this->redirectToPostedUrl();

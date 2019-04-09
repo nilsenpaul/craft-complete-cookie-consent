@@ -5,12 +5,14 @@ namespace nilsenpaul\cookieconsent;
 use nilsenpaul\cookieconsent\models\Settings;
 use nilsenpaul\cookieconsent\models\CookieSettings;
 use nilsenpaul\cookieconsent\records\Settings as SettingsRecord;
+use nilsenpaul\cookieconsent\variables\CompleteCookieConsentVariable;
 
 use Craft;
 use craft\events\RegisterUrlRulesEvent;
 use craft\helpers\UrlHelper;
 use craft\web\UrlManager;
 use craft\web\View;
+use craft\web\twig\variables\CraftVariable;
 
 use yii\base\Event;
 use yii\helpers\Html;
@@ -54,6 +56,15 @@ class Plugin extends \craft\base\Plugin
             }
         );
 
+        // Register variable
+        Event::on(
+            CraftVariable::class, 
+            CraftVariable::EVENT_INIT,
+            function (Event $event) {
+                $variable = $event->sender;
+                $variable->set('ccc', CompleteCookieConsentVariable::class);
+            }
+        );
 
         // Trigger the asset bundles, if need be
         $request = Craft::$app->getRequest();
@@ -94,12 +105,7 @@ class Plugin extends \craft\base\Plugin
 
     protected function setCookieVariable()
     {
-        $cookieValue = $this->cookies->get();
-
-        $cookieSettings = new CookieSettings();
-        if ($cookieValue) {
-            $cookieSettings->populateFromCookie($cookieValue);
-        }
+        $cookieSettings = $this->consent->getInfo();
 
         $view = Craft::$app->getView();
         $view->registerJs('var ccc = ' . json_encode($cookieSettings), View::POS_BEGIN);
