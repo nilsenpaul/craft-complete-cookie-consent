@@ -78,6 +78,7 @@ As of v1.0.1, it's possible to update consent preferences for a visitor with a f
 ## TO-DO
  * More JS examples, for example how to prevend Google Tag Manager from loading if consent is not given
  * Simple statistics, to know how the cookie banner effects your site
+ * Add 'implied consent' functionality
  * Make the plugin work with static page caching
  
 ## Known issues
