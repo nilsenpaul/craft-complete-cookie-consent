@@ -54,3 +54,7 @@ You can use these values to load (or prevent loading of) whatever you want.
 ### TO-DO
  * More JS examples, for example how to prevend Google Tag Manager from loading if consent is not given
  * Simple statistics, to know how the cookie banner effects your site
+ * Make the plugin work with static page caching
+ 
+### Known issues
+ * The plugin does not work with static page caching (yet).
