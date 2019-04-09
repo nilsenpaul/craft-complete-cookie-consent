@@ -12,7 +12,7 @@ class Consent extends Component
 {
     public function getInfo()
     {
-        $cookieValue = Plugin::$instance->cookies->get();
+        $cookieValue = Plugin::$instance->cookies->getConsentCookie();
 
         $cookieSettings = new CookieSettings();
         if ($cookieValue) {

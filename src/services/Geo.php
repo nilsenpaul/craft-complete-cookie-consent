@@ -11,6 +11,17 @@ class Geo extends Component
 {
     protected $ipApiUrl = 'http://api.ipapi.com/';
 
+    public function isEuropeanCountry()
+    {
+        $data = $this->getInfo();
+
+        if (isset($data['location']['is_eu']) && $data['location']['is_eu']) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function getInfo($doCache = true)
     {
         $settings = Plugin::$instance->getSettings();
@@ -20,9 +31,8 @@ class Geo extends Component
         $devMode = Craft::$app->config->general->devMode;
 
         $ip = Craft::$app->getRequest()->remoteIp;
-        $localIps = ['127.0.0.1', '::1'];
 
-        if (in_array($ip, $localIps) || $devMode) {
+        if (!$settings['useIpApi'] || $settings['ipApiKey'] == '' || in_array($ip, Plugin::$instance->localIps) || $devMode) {
             // Return an empty array
             return [];
         }

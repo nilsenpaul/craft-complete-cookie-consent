@@ -29,7 +29,7 @@ class ConsentController extends Controller
             }
         }
 
-        Plugin::$instance->cookies->set($cookieTypesWithConsent);
+        Plugin::$instance->cookies->setConsentCookie($cookieTypesWithConsent);
         Craft::$app->getSession()->setNotice(Craft::t('complete-cookie-consent', 'Cookie preferences have been saved'));
 
         return $this->redirectToPostedUrl();

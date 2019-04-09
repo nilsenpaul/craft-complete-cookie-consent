@@ -1,5 +1,9 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.2 - 2019.04.09
+### Added
+- Added a choice between Implied and Explicit consent
+
 ## 1.0.1 - 2019.04.09
 ### Added
 - Added a service and variable, to provide templates with consent info

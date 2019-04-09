@@ -9,7 +9,9 @@ use craft\base\Model;
 
 class CookieSettings extends Model
 {
+    public $consentNeeded = true;
     public $consentSubmitted = false;
+    public $consentImplied = false;
     public $consent = false;
 
     public function init()
@@ -17,8 +19,21 @@ class CookieSettings extends Model
         $settings = Plugin::$instance->getSettings(null, true);
 
         $consent = [];
-        foreach ($settings->cookieTypes as $cookieType) {
-            $consent[$cookieType['handle']] = false;
+
+        if ($settings->consentType == 'implied') {
+            foreach ($settings->cookieTypes as $cookieType) {
+                if ($cookieType['defaultOn']) {
+                    $consent[$cookieType['handle']] = true;
+                } else {
+                    $consent[$cookieType['handle']] = false;
+                }
+            }
+
+            $this->consentImplied = true;
+        } else {
+            foreach ($settings->cookieTypes as $cookieType) {
+                $consent[$cookieType['handle']] = false;
+            }
         }
 
         $this->consent = $consent;
@@ -35,5 +50,6 @@ class CookieSettings extends Model
 
         $this->consent = $consent;
         $this->consentSubmitted = true;
+        $this->consentImplied = false;
     }
 }

@@ -25,12 +25,17 @@ class Plugin extends \craft\base\Plugin
     public $hasCpSettings = true;
     public $hasCpSection = true;
 
+    public $localIps = ['127.0.0.1', '::1'];
+
     public function init()
     {
         parent::init();
 
         // Set instance
         self::$instance = $this;
+
+        // Load settings
+        $settings = $this->getSettings();
 
         // CP Routes
         Event::on(
@@ -68,39 +73,51 @@ class Plugin extends \craft\base\Plugin
 
         // Trigger the asset bundles, if need be
         $request = Craft::$app->getRequest();
-        $settings = $this->getSettings();
         if (
             $this->isInstalled 
             && !$request->isConsoleRequest
             && !$request->isCpRequest
             && $settings->pluginIsActive
-            && $this->showBasedOnGeo()
-            && (!$settings->onlyShowAdmins || Craft::$app->user->isAdmin)) {
+        ) {
+            // Fill the JS cookie variable
             $this->setCookieVariable();
-            $this->registerAssetBundles();
+
+            // Load banner assets, if needed
+            if ($this->bannerShouldBeShown()
+                && (!$settings->onlyShowAdmins || Craft::$app->user->isAdmin)
+            ) {
+                $this->registerAssetBundles();
+            }
+        }
+
+        // If Implied Consent is allowed, set a cookie to see if the visitor has been here before
+        if ($settings->consentType === 'implied' && $this->cookies->isFirstVisit()) {
+            $this->cookies->setFirstVisitCookie();
         }
     }
 
-    protected function showBasedOnGeo()
+    protected function bannerShouldBeShown()
     {
         $settings = $this->getSettings();
+        $devMode = Craft::$app->getConfig()->general->devMode;
+        $ip = Craft::$app->getRequest()->remoteIp;
 
+        // Implied Consent, and not first page load?
+        if ($settings->consentType === 'implied' && !$this->cookies->isFirstVisit()) {
+            return false;
+        }
+
+        // Local IP or devMode? Always show the banner
+        if (\in_array($ip, $this->localIps) || $devMode) {
+            return true;
+        }
+
+        // With the Geo API turned off, there's no way to determine if the banner should be visible. Always show it.
         if (!$settings->useIpApi) {
             return true;
         }
 
-        $geoData = $this->geo->getInfo(true);
-
-        if (!empty($geoData)) {
-            if ($geoData['location']['is_eu']) {
-                return true;
-            }
-
-            return false;
-        }
-
-        // Return true if no location was found, show the banner just to be sure
-        return true;
+        return $this->geo->isEuropeanCountry();
     }
 
     protected function setCookieVariable()

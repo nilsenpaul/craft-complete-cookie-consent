@@ -30,6 +30,18 @@
                     on: settings.pluginIsActive,
                 }) }}
 
+                {{ forms.selectField({
+                    label: 'Consent mode' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'Should the consent be implied or explicit (with implied consent, the cookie banner will only be shown on the first page load of every visitor)' |t('complete-cookie-consent'),
+                    name: 'consentType',
+                    options: {
+                        implied: 'Implied' |t('complete-cookie-consent'),
+                        explicit: 'Explicit' |t('complete-cookie-consent'),
+                    },
+                    value: settings.consentType,
+                }) }}
+
                 {{ forms.lightswitchField({
                     label: 'Only show to admins' |t('complete-cookie-consent'),
                     instructions: 'Set to true if you want the banner to be shown to logged in admins only (for testing purposes)' |t('complete-cookie-consent'),

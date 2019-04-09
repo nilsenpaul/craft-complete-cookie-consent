@@ -10,6 +10,7 @@ use craft\validators\ColorValidator;
 class Settings extends Model
 {
     public $pluginIsActive = false;
+    public $consentType = 'explicit';
     public $includeCss = true;
     public $onlyShowAdmins = false;
     public $rememberFor = 86400;
@@ -64,6 +65,7 @@ class Settings extends Model
             [['bannerColor', 'bannerButtonColor', 'bannerButtonTextColor'], ColorValidator::class],
             [['bannerColor', 'bannerButtonColor', 'bannerButtonText', 'cookieTypes', 'cookieName'], 'required'],
             [['bannerPosition'], 'in', 'range' => ['top', 'left', 'bottom', 'right', 'center']],
+            [['consentType'], 'in', 'range' => ['implied', 'explicit']],
             [['rememberFor'], 'number'],
             [[
                 'useIpApi',

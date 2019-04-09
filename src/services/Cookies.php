@@ -9,15 +9,53 @@ use craft\base\Component;
 
 class Cookies extends Component
 {
-    public function set($value)
+    CONST BASE_COOKIE_NAME = 'ccc-visit';
+
+    public function setFirstVisitCookie()
+    {
+        $settings = Plugin::$instance->getSettings();
+        $name = self::BASE_COOKIE_NAME;
+        $expire = (new \DateTime())->modify('+' . $settings->rememberFor . ' seconds')->getTimestamp();
+
+        $this->set($name, 1, $expire);
+
+        return true;
+    }
+
+    public function isFirstVisit()
+    {
+        $visitCookie = $this->get(self::BASE_COOKIE_NAME);
+
+        if (!$visitCookie) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function setConsentCookie($value)
+    {
+        $settings = Plugin::$instance->getSettings();
+        $name = $settings->cookieName;
+        $value = json_encode($value);
+        $expire = (new \DateTime())->modify('+' . $settings->rememberFor . ' seconds')->getTimestamp();
+
+        $this->set($name, $value, $expire);
+
+        return true;
+    }
+
+    public function getConsentCookie()
     {
         $settings = Plugin::$instance->getSettings();
         $name = $settings->cookieName;
 
-        $value = json_encode($value);
+        return $this->get($name);
+    }
 
+    protected function set($name, $value, $expire)
+    {
         $domain = Craft::$app->getConfig()->getGeneral()->defaultCookieDomain;
-        $expire = (new \DateTime())->modify('+' . $settings->rememberFor . ' seconds')->getTimestamp();
         $path = '/';
         setcookie($name, $value, $expire, $path, $domain);
         $_COOKIE[$name] = $value;
@@ -25,15 +63,13 @@ class Cookies extends Component
         return true;
     }
 
-    public function get()
+    protected function get($name)
     {
-        $settings = Plugin::$instance->getSettings();
-        $name = $settings->cookieName;
-
         if (isset($_COOKIE[$name])) {
             return json_decode($_COOKIE[$name]);
         }
 
         return false;
     }
+
 }
