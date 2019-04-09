@@ -35,15 +35,24 @@ After you've installed the plugin, and activated the cookie consent banner, the 
 
 ![Banner screenshot](resources/img/cookie-banner.png)
 
+### Consent mode (implied/explicit)
+The Complete Cookie Consent plugin lets you choose between two consent modes: Implied and Explicit. With implied consent, the cookie banner will only be shown on every visitor's first page load. With explicit consent, the visitor will have to make a choice before the banner disappears.
+
+#### What should I choose?
+This is *NOT* legal advice. It's hard to find out what rules apply to your website, especially because every European country has its own set of rules (or no rules or enforcement whatsoever). If you want to play safe, go for explicit consent. If you decide to go for implied consent, make sure you [create a form](#updating-cookie-consent-preferences-with-your-own-form) on your site for visitors to change their preferences.
+
 ### Honoring your visitor's cookie preferences
 
 Cookie consent wouldn't be of much use if you wouldn't act upon the preferences of your users. That's why the `ccc` JavaScript object is set, containing the preferences of the current visitor:
 
     console.log(ccc.consentSubmitted)
-    # prints true or false
+    # prints true or false. Only true if visitor submitted their preferences
+    
+    console.log(ccc.consentImplied)
+    # prints true or false. True if consent mode is set to 'implied' and the visitor did not submit their own preferences
     
     console.log(ccc.consent.[cookieTypeHandle])
-    # prints true or false, depending on your visitor's choice
+    # prints true or false, depending on your visitor's choice (or the default settings, if consent mode is 'implied')
     
 You can use these values to load (or prevent loading of) whatever you want.
 
