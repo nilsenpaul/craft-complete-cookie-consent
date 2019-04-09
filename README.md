@@ -47,14 +47,38 @@ Cookie consent wouldn't be of much use if you wouldn't act upon the preferences 
     
 You can use these values to load (or prevent loading of) whatever you want.
 
-### Thank you!
+### Cookie Consent variable
+The plugin provides a template variable, to get the current visitor's consent info:
+
+    {% set consentInfo = craft.ccc.consentInfo %}
+    
+    {{ consentInfo.consentSubmitted }}{# <-- true or false #}
+    {{ consentInfo.consent }}{# <-- An array with cookieType handles as keys, and consent status as value #}
+
+### Updating cookie consent preferences with your own form
+As of v1.0.1, it's possible to update consent preferences for a visitor with a form like this:
+
+    <form method="POST">
+        <input type="hidden" name="action" value="complete-cookie-consent/consent/submit" />
+        {{ csrfInput() }}
+ 
+        {% for consentType, consentStatus in craft.ccc.consentInfo.consent %}
+            <label for="cookieTypes[consentType]">
+                <input type="checkbox" name="cookieTypes[]" value="{{ consentType }}"{% if consentStatus == true %} checked{% endif %} /> {{ consentType }}
+            </label>
+        {% endfor %}
+ 
+        <input type="submit" value="Submit" />
+    </form>
+
+## Thank you!
 
   * [NYStudio107](https://github.com/nystudio107), for all the work you put in your plugins and the blog posts you write. Writing plugins is easier with your code as guidance.
 
-### TO-DO
+## TO-DO
  * More JS examples, for example how to prevend Google Tag Manager from loading if consent is not given
  * Simple statistics, to know how the cookie banner effects your site
  * Make the plugin work with static page caching
  
-### Known issues
+## Known issues
  * The plugin does not work with static page caching (yet).
