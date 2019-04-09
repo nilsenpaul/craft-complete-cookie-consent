@@ -68,7 +68,7 @@ class ConsentController extends Controller
             return true;
         }
 
-        return $this->geo->isEuropeanCountry();
+        return Plugin::$instance->geo->isEuropeanCountry();
     }
 }
 
