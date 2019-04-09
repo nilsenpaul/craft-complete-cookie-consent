@@ -79,20 +79,12 @@ class Plugin extends \craft\base\Plugin
             && !$request->isCpRequest
             && $settings->pluginIsActive
         ) {
-            // Fill the JS cookie variable
-            $this->setCookieVariable();
+            $this->registerAssetBundles();
 
-            // Load banner assets, if needed
-            if ($this->bannerShouldBeShown()
-                && (!$settings->onlyShowAdmins || Craft::$app->user->isAdmin)
-            ) {
-                $this->registerAssetBundles();
+            // If Implied Consent is allowed, set a cookie to see if the visitor has been here before
+            if ($settings->consentType === 'implied' && !$request->isActionRequest) {
+                $this->cookies->countVisit();
             }
-        }
-
-        // If Implied Consent is allowed, set a cookie to see if the visitor has been here before
-        if ($settings->consentType === 'implied' && $this->cookies->isFirstVisit()) {
-            $this->cookies->setFirstVisitCookie();
         }
     }
 
@@ -120,14 +112,6 @@ class Plugin extends \craft\base\Plugin
         return $this->geo->isEuropeanCountry();
     }
 
-    protected function setCookieVariable()
-    {
-        $cookieSettings = $this->consent->getInfo();
-
-        $view = Craft::$app->getView();
-        $view->registerJs('var ccc = ' . json_encode($cookieSettings), View::POS_BEGIN);
-    }
-
     protected function registerAssetBundles()
     {
         $settings = $this->getSettings(null, true);
@@ -140,11 +124,6 @@ class Plugin extends \craft\base\Plugin
 
         // Include JS
         $view->registerAssetBundle('nilsenpaul\\cookieconsent\\assetbundles\\CompleteCookieConsentJsAsset');
-        $view->registerJs('
-            window.csrfTokenName = "' . Craft::$app->getConfig()->general->csrfTokenName . '";
-            window.csrfTokenValue = "' . Craft::$app->getRequest()->csrfToken . '";
-            var cccSettings = ' . json_encode($settings)
-        , View::POS_BEGIN);
     }
 
     public function getSettings($siteId = null, $parseMarkdown = false)

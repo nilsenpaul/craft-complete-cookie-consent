@@ -9,15 +9,17 @@ use craft\base\Component;
 
 class Cookies extends Component
 {
-    CONST BASE_COOKIE_NAME = 'ccc-visit';
+    CONST BASE_COOKIE_NAME = 'ccc-counter';
 
-    public function setFirstVisitCookie()
+    public function countVisit()
     {
         $settings = Plugin::$instance->getSettings();
         $name = self::BASE_COOKIE_NAME;
         $expire = (new \DateTime())->modify('+' . $settings->rememberFor . ' seconds')->getTimestamp();
 
-        $this->set($name, 1, $expire);
+        $existingValue = (int)$this->get(self::BASE_COOKIE_NAME);
+
+        $this->set($name, $existingValue + 1, $expire);
 
         return true;
     }
@@ -26,7 +28,7 @@ class Cookies extends Component
     {
         $visitCookie = $this->get(self::BASE_COOKIE_NAME);
 
-        if (!$visitCookie) {
+        if (!$visitCookie || $visitCookie <= 1) {
             return true;
         }
 

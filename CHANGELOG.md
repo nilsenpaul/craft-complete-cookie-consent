@@ -1,5 +1,11 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.3 - 2019.04.09
+### Changed
+- Changed the way consent settings are loaded, allowing for static page caching
+### Fixed
+- The plugin can now be used combined with static page caching
+
 ## 1.0.2 - 2019.04.09
 ### Added
 - Added a choice between Implied and Explicit consent
