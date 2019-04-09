@@ -86,7 +86,7 @@ class Settings extends Model
             [['bannerColor', 'bannerButtonColor', 'bannerButtonText', 'cookieTypes', 'cookieName'], 'required'],
             [['bannerPosition'], 'in', 'range' => ['top', 'left', 'bottom', 'right', 'center']],
             [['consentType'], 'in', 'range' => ['implied', 'explicit']],
-            [['geolocationMethod'], 'in', 'range' => ['geoIpLite', 'ipApi']],
+            [['geolocationMethod'], 'in', 'range' => ['none', 'geoIpLite', 'ipApi']],
             [['rememberFor'], 'number'],
             [[
                 'useIpApi',
