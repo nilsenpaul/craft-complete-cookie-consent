@@ -39,7 +39,7 @@ class ConsentController extends Controller
     {
         return $this->asJson([
             'consentInfo' => Plugin::$instance->consent->getInfo(),
-            'pluginSettings' => Plugin::$instance->getSettings()->forFrontend(),
+            'pluginSettings' => Plugin::$instance->getSettings(null, true)->forFrontend(),
             'isFirstVisit' => Plugin::$instance->cookies->isFirstVisit(),
             'csrfTokenName' => Craft::$app->getConfig()->general->csrfTokenName,
             'csrfTokenValue' => Craft::$app->getRequest()->csrfToken,
