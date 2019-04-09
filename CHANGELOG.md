@@ -1,5 +1,9 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.4 - 2019.04.09
+### Added
+- Added GeoIpLite as a geolocation method
+
 ## 1.0.3 - 2019.04.09
 ### Changed
 - Changed the way consent settings are loaded, allowing for static page caching
