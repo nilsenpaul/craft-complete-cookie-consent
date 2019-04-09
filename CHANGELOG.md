@@ -1,5 +1,9 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.4.2 - 2019.04.09
+### Fix
+- Fix minor bugs
+
 ## 1.0.4.1 - 2019.04.09
 ### Fix
 - Fixed a bug where setting geolocation method to 'none' was impossible

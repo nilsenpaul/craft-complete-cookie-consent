@@ -7,7 +7,7 @@ window.ccc = null;
 Vue.use({
     install (Vue) {
         Vue.prototype.$api = axios.create({
-            baseUrl: ''
+            baseUrl: '/'
         });
     }
 });
