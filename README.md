@@ -25,7 +25,7 @@ Using the plugin's settings page, you have total control over the appearance and
   * Choose a position for the banner: top, right, bottom, left or center
   * Change the name and expiration time for the preferences cookie
   * Change cookie types, make cookie types required or checked by default
-  * Add geolocation to your cookie consent process by adding a [ipApi](https://ipapi.com/) API key: only show the banner to EU visitors
+  * Add geolocation to your cookie consent process by using an automatically downloaded GeoIpLite database, or by adding an [ipApi](https://ipapi.com/) API key: only show the banner to EU visitors
   
 ![Banner screenshot](resources/img/settings-cookietypes.png)
 
@@ -87,7 +87,3 @@ As of v1.0.1, it's possible to update consent preferences for a visitor with a f
 ## TO-DO
  * More JS examples, for example how to prevend Google Tag Manager from loading if consent is not given
  * Simple statistics, to know how the cookie banner effects your site
- * Make the plugin work with static page caching
- 
-## Known issues
- * The plugin does not work with static page caching (yet).
