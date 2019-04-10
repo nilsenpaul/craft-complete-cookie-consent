@@ -2,6 +2,11 @@
 
 This plugin will help you comply with [EU Cookie law](https://www.privacypolicies.com/blog/eu-cookie-law/). As that law states, all European visitors of your site should not only be made aware of, but also consent to the cookies your site sets. This plugin will help you obtain consent for one or more cookie groups.
 
+## License
+
+This plugin requires a commercial license which can be purchased through the [Craft Plugin Store](https://plugins.craftcms.com/complete-cookie-consent).  
+The license fee is $29 plus $9 per subsequent year for updates (optional).
+
 ## Requirements
 
 This plugin requires Craft CMS 3.0.0 or later.
