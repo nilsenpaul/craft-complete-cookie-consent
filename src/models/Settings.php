@@ -20,6 +20,16 @@ class Settings extends Model
     public $bannerButtonText = 'Save settings';
     public $bannerButtonColor = '#404040';
     public $bannerButtonTextColor = '#ffffff';
+    public $primaryButtonText = 'Save settings';
+    public $primaryButtonBackgroundColor = '#404040';
+    public $primaryButtonTextColor = '#ffffff';
+    public $showSecondaryButton = false;
+    public $secondaryButtonText = 'Learn more';
+    public $secondaryButtonBackgroundColor = '#efefef';
+    public $secondaryButtonTextColor = '#404040';
+    public $secondaryButtonLink;
+    public $secondaryButtonLinkToEntry;
+    public $secondaryButtonOpenInNewTab = false;
     public $bannerPosition = 'bottom';
     public $showToggleAll = true;
     public $toggleAllText = 'Toggle all';
@@ -34,9 +44,15 @@ class Settings extends Model
         'bannerColor',
         'bannerTitle',
         'bannerText',
-        'bannerButtonText',
-        'bannerButtonColor',
-        'bannerButtonTextColor',
+        'primaryButtonText',
+        'primaryButtonBackgroundColor',
+        'primaryButtonTextColor',
+        'showSecondaryButton',
+        'secondaryButtonText',
+        'secondaryButtonBackgroundColor',
+        'secondaryButtonTextColor',
+        'secondaryButtonHref',
+        'secondaryButtonOpenInNewTab',
         'bannerPosition',
         'showToggleAll',
         'toggleAllText',
@@ -77,13 +93,18 @@ class Settings extends Model
         if ($this->useIpApi) {
             $this->geolocationMethod = 'ipApi';
         }
+
+        // Set new primary button attributes if settings existed
+        $this->primaryButtonText = $this->bannerButtonText;
+        $this->primaryButtonBackgroundColor = $this->bannerButtonColor;
+        $this->primaryButtonTextColor = $this->bannerButtonTextColor;
     }
 
     public function rules()
     {
         return [
-            [['bannerColor', 'bannerButtonColor', 'bannerButtonTextColor'], ColorValidator::class],
-            [['bannerColor', 'bannerButtonColor', 'bannerButtonText', 'cookieTypes', 'cookieName'], 'required'],
+            [['bannerColor', 'primaryButtonBackgroundColor', 'primaryButtonTextColor'], ColorValidator::class],
+            [['primaryButtonText', 'primaryButtonBackgroundColor', 'primaryButtonTextColor', 'cookieTypes', 'cookieName'], 'required'],
             [['bannerPosition'], 'in', 'range' => ['top', 'left', 'bottom', 'right', 'center']],
             [['consentType'], 'in', 'range' => ['implied', 'explicit']],
             [['geolocationMethod'], 'in', 'range' => ['none', 'geoIpLite', 'ipApi']],
@@ -98,7 +119,13 @@ class Settings extends Model
                 'toggleAllText',
                 'bannerTitle',
                 'bannerText',
-                'bannerButtonText',
+                'showSecondaryButton',
+                'secondaryButtonText',
+                'secondaryButtonBackgroundColor',
+                'secondaryButtonTextColor',
+                'secondaryButtonLink',
+                'secondaryButtonLinkToEntry',
+                'secondaryButtonOpenInNewTab',
             ], 'safe'],
         ];
     }
@@ -112,5 +139,25 @@ class Settings extends Model
         }
 
         return $publicSettings;
+    }
+
+    public function getSecondaryButtonEntry()
+    {
+        if (!empty($this->secondaryButtonLinkToEntry)) {
+            return Craft::$app->getElements()->getElementById($this->secondaryButtonLinkToEntry[0]);
+        }
+
+        return null;
+    }
+
+    public function getSecondaryButtonHref()
+    {
+        $entry = $this->getSecondaryButtonEntry();
+
+        if ($entry) {
+            return $entry->url;
+        }
+
+        return $this->secondaryButtonLink;
     }
 }

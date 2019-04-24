@@ -81,21 +81,6 @@
                     value: settings.bannerColor,
                 }) }}
 
-                {{ forms.colorField({
-                    label: 'Banner button color' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'What color should the button be?' |t('complete-cookie-consent'),
-                    name: 'bannerButtonColor',
-                    value: settings.bannerButtonColor,
-                }) }}
-
-                {{ forms.colorField({
-                    label: 'Banner button text color' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'What color should the button text be?' |t('complete-cookie-consent'),
-                    name: 'bannerButtonTextColor',
-                    value: settings.bannerButtonTextColor,
-                }) }}
             </div>
             <div id="text" class="hidden">
                 {{ forms.textField({
@@ -123,12 +108,93 @@
                 }) }}
                 #}
 
+            </div>
+
+            <div id="buttons" class="hidden">
+                <h2>{{ 'Primary button' |t('complete-cookie-consent') }}</h2>
+                <p>{{ 'The primary button can not be switched off, as it\'s needed to confirm a visitor\'s consent' |t('complete-cookie-consent') }}</p>
+
                 {{ forms.textField({
-                    label: 'Banner button text' |t('complete-cookie-consent'),
+                    label: 'Primary button text' |t('complete-cookie-consent'),
                     required: true,
-                    instructions: 'The text on the banner\'s button' |t('complete-cookie-consent'),
-                    name: 'bannerButtonText',
-                    value: settings.bannerButtonText,
+                    instructions: 'The text on the banner\'s primary button' |t('complete-cookie-consent'),
+                    name: 'primaryButtonText',
+                    value: settings.primaryButtonText,
+                }) }}
+
+                {{ forms.colorField({
+                    label: 'Primary button color' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'What color should the primary button be?' |t('complete-cookie-consent'),
+                    name: 'primaryButtonBackgroundColor',
+                    value: settings.primaryButtonBackgroundColor,
+                }) }}
+
+                {{ forms.colorField({
+                    label: 'Primary button text color' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'What color should the primary button text be?' |t('complete-cookie-consent'),
+                    name: 'primaryButtonTextColor',
+                    value: settings.primaryButtonTextColor,
+                }) }}
+
+                <h2>{{ 'Secondary button' |t('complete-cookie-consent') }}</h2>
+                <p>{{ 'With the (optional) secondary button, you can redirect your visitor to an entry or url' |t('complete-cookie-consent') }}</p>
+
+                {{ forms.lightswitchField({
+                    label: 'Display secondary button' |t('complete-cookie-consent'),
+                    instructions: 'Toggle the visibility of the secondary button' |t('complete-cookie-consent'),
+                    name: 'showSecondaryButton',
+                    on: settings.showSecondaryButton,
+                }) }}
+
+                {{ forms.textField({
+                    label: 'Secondary button text' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'The text on the banner\'s secondary button' |t('complete-cookie-consent'),
+                    name: 'secondaryButtonText',
+                    value: settings.secondaryButtonText,
+                }) }}
+
+                {{ forms.colorField({
+                    label: 'Secondary button color' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'What color should the secondary button be?' |t('complete-cookie-consent'),
+                    name: 'secondaryButtonBackgroundColor',
+                    value: settings.secondaryButtonBackgroundColor,
+                }) }}
+
+                {{ forms.colorField({
+                    label: 'Secondary button text color' |t('complete-cookie-consent'),
+                    required: true,
+                    instructions: 'What color should the secondary button text be?' |t('complete-cookie-consent'),
+                    name: 'secondaryButtonTextColor',
+                    value: settings.secondaryButtonTextColor,
+                }) }}
+
+                {{ forms.elementSelectField({
+                    label: 'Secondary button link to entry ...'|t('complete-cookie-consent'),
+                    instructions: 'Select an entry to link the secondary button to'|t('complete-cookie-consent'),
+                    id: 'ccc_secondary-button-entry-link',
+                    name: 'secondaryButtonLinkToEntry',
+                    elementType: 'craft\\elements\\Entry',
+                    elements: [settings.secondaryButtonEntry],
+                    selectionLabel: 'Select an entry'|t('complete-cookie-consent'),
+                    limit: 1,
+                }) }}
+
+                {{ forms.textField({
+                    label: '... or secondary button link' |t('complete-cookie-consent'),
+                    type: 'url',
+                    instructions: 'Enter a valid url, or a relative path to wherever you want the secondary button to point to' |t('complete-cookie-consent'),
+                    name: 'secondaryButtonLink',
+                    value: settings.secondaryButtonLink,
+                }) }}
+
+                {{ forms.lightswitchField({
+                    label: 'Open link in new tab' |t('complete-cookie-consent'),
+                    name: 'secondaryButtonOpenInNewTab',
+                    on: settings.secondaryButtonOpenInNewTab,
                 }) }}
             </div>
             <div id="cookies" class="hidden">

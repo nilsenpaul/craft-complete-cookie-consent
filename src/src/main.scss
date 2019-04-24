@@ -64,7 +64,7 @@
         border: 0;
         border-radius: 0.25rem;
         font-size: 1rem;
-        display: block;
+        display: inline-block;
         margin: 2rem 0 0 0;
         box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
         cursor: pointer;
@@ -73,6 +73,17 @@
         &:focus,
         &:active {
             box-shadow: none;
+        }
+
+        &--secondary {
+            display: inline-block;
+            margin: 0 0 0 0.5rem;
+
+            &:hover,
+            &:focus,
+            &:active {
+                text-decoration: none;
+            }
         }
     }
 }

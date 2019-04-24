@@ -43,6 +43,10 @@ class SettingsController extends Controller
                 'url' => '#text',
             ],
             [
+                'label' => Craft::t('complete-cookie-consent', 'Buttons'),
+                'url' => '#buttons',
+            ],
+            [
                 'label' => Craft::t('complete-cookie-consent', 'Cookie settings'),
                 'url' => '#cookies',
             ],
