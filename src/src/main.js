@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import axios from 'axios';
-import Cookiebanner from './Cookiebanner.vue';
+import CookieBanner from './Cookiebanner.vue';
 
 window.ccc = null;
 
@@ -14,5 +14,5 @@ Vue.use({
 
 new Vue({
     el: '#ccc',
-    components: { Cookiebanner },
+    components: { CookieBanner },
 });

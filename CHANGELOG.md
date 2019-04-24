@@ -1,15 +1,19 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.5.1 - 2019.04.24
+### Fixed
+- Changed the custom Vue tag to use a hyphen, as stated by [https://html.spec.whatwg.org/multipage/custom-elements.html#valid-custom-element-name]
+
 ## 1.0.5 - 2019.04.24
 ### Added
 - Added a secondary button to the banner, with the ability to link this button to an entry or url of your liking
 
 ## 1.0.4.2 - 2019.04.09
-### Fix
+### Fixed
 - Fix minor bugs
 
 ## 1.0.4.1 - 2019.04.09
-### Fix
+### Fixed
 - Fixed a bug where setting geolocation method to 'none' was impossible
 
 ## 1.0.4 - 2019.04.09

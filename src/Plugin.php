@@ -57,7 +57,7 @@ class Plugin extends \craft\base\Plugin
             View::class,
             View::EVENT_END_BODY,
             function (Event $event) {
-                echo Html::tag('div', Html::tag('cookiebanner'), ['id' => 'ccc']);
+                echo Html::tag('div', Html::tag('cookie-banner'), ['id' => 'ccc']);
             }
         );
 
