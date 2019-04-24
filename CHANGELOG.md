@@ -1,5 +1,9 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.5 - 2019.04.24
+### Added
+- Added a secondary button to the banner, with the ability to link this button to an entry or url of your liking
+
 ## 1.0.4.2 - 2019.04.09
 ### Fix
 - Fix minor bugs
