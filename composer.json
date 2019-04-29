@@ -29,7 +29,7 @@
     "handle": "complete-cookie-consent",
     "name": "Complete Cookie Consent",
     "hasSettings": true,
-    "documentationUrl": "https://github.com/nilsenpaul/complete-cookie-consent/blob/master/README.md",
+    "documentationUrl": "https://github.com/nilsenpaul/craft-complete-cookie-consent/blob/master/README.md",
     "components": {
       "consent": "nilsenpaul\\cookieconsent\\services\\Consent",
       "cookies": "nilsenpaul\\cookieconsent\\services\\Cookies",
