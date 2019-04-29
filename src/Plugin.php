@@ -37,6 +37,8 @@ class Plugin extends \craft\base\Plugin
         // Load settings
         $settings = $this->getSettings();
 
+        $this->name = $settings->pluginName;
+
         // CP Routes
         Event::on(
             UrlManager::class,

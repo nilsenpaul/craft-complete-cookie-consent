@@ -30,6 +30,15 @@
                     on: settings.pluginIsActive,
                 }) }}
 
+
+                {{ forms.textField({
+                    label: 'Plugin name' |t('complete-cookie-consent'),
+                    instructions: 'Use this field to change the displayed name of the plugin' |t('complete-cookie-consent'),
+                    name: 'pluginName',
+                    value: settings.pluginName,
+                }) }}
+
+
                 {{ forms.selectField({
                     label: 'Consent mode' |t('complete-cookie-consent'),
                     required: true,
