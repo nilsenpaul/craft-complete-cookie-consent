@@ -9,6 +9,7 @@ use craft\validators\ColorValidator;
 
 class Settings extends Model
 {
+    public $pluginName = 'Complete Cookie Consent';
     public $pluginIsActive = false;
     public $consentType = 'explicit';
     public $includeCss = true;
@@ -104,7 +105,7 @@ class Settings extends Model
     {
         return [
             [['bannerColor', 'primaryButtonBackgroundColor', 'primaryButtonTextColor'], ColorValidator::class],
-            [['primaryButtonText', 'primaryButtonBackgroundColor', 'primaryButtonTextColor', 'cookieTypes', 'cookieName'], 'required'],
+            [['pluginName', 'primaryButtonText', 'primaryButtonBackgroundColor', 'primaryButtonTextColor', 'cookieTypes', 'cookieName'], 'required'],
             [['bannerPosition'], 'in', 'range' => ['top', 'left', 'bottom', 'right', 'center']],
             [['consentType'], 'in', 'range' => ['implied', 'explicit']],
             [['geolocationMethod'], 'in', 'range' => ['none', 'geoIpLite', 'ipApi']],

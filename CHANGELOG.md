@@ -1,5 +1,11 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.5.2 - 2019.04.29
+### Fixed
+- Corrected the documentation URL
+### Added
+- Added the ability to change the plugin's name
+
 ## 1.0.5.1 - 2019.04.24
 ### Fixed
 - Changed the custom Vue tag to use a hyphen, as stated by https://html.spec.whatwg.org/multipage/custom-elements.html#valid-custom-element-name
