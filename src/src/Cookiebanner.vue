@@ -36,7 +36,7 @@
         mounted: function() {
             var that = this;
             this.$api
-                .get('/actions/complete-cookie-consent/consent/banner-info')
+                .get(window.cccSiteUrl + '/actions/complete-cookie-consent/consent/banner-info')
                 .then(function(response) {
                     // Fill a global variable for the website to use
                     window.ccc = response.data.consentInfo;

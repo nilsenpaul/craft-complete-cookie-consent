@@ -1,5 +1,9 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.5.2 - 2019.04.cw3029
+### Fixed
+- Made sure the banner works with all site urls
+
 ## 1.0.5.2 - 2019.04.29
 ### Fixed
 - Corrected the documentation URL
