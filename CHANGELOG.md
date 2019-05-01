@@ -1,5 +1,9 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.6 - 2019.05.01
+### Added
+- Added more (and better defined) tags and classes to the form, for your styling pleasure
+
 ## 1.0.5.3 - 2019.04.30
 ### Fixed
 - Made sure the banner works with all site urls
@@ -7,6 +11,7 @@
 ## 1.0.5.2 - 2019.04.29
 ### Fixed
 - Corrected the documentation URL
+
 ### Added
 - Added the ability to change the plugin's name
 
