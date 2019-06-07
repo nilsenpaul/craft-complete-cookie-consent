@@ -94,7 +94,7 @@ class Plugin extends \craft\base\Plugin
     {
         $settings = $this->getSettings();
         $devMode = Craft::$app->getConfig()->general->devMode;
-        $ip = Craft::$app->getRequest()->remoteIp;
+        $ip = Craft::$app->getRequest()->userIP ?? Craft::$app->getRequest()->remoteIP;
 
         // Implied Consent, and not first page load?
         if ($settings->consentType === 'implied' && !$this->cookies->isFirstVisit()) {

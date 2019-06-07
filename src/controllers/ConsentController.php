@@ -51,7 +51,7 @@ class ConsentController extends Controller
     {
         $settings = Plugin::$instance->getSettings();
         $devMode = Craft::$app->getConfig()->general->devMode;
-        $ip = Craft::$app->getRequest()->remoteIp;
+        $ip = Craft::$app->getRequest()->userIP ?? Craft::$app->getRequest()->remoteIP;
 
         // Skip this part on local IPs or devMode
         if (in_array($ip, Plugin::$instance->localIps) || $devMode) {
