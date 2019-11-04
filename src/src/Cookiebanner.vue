@@ -47,13 +47,17 @@
                 .then(function(response) {
                     // Fill a global variable for the website to use
                     window.ccc = response.data.consentInfo;
-                    
+
                     that.pluginSettings = response.data.pluginSettings; 
                     that.isFirstVisit = response.data.isFirstVisit; 
                     that.bannerShouldBeShown = response.data.bannerShouldBeShown; 
                     that.csrfTokenName = response.data.csrfTokenName; 
                     that.csrfTokenValue = response.data.csrfTokenValue; 
                     that.consentInfo = response.data.consentInfo; 
+
+                    // Dispatch an event on the window element
+                    var event = new Event('ccc.loaded');
+                    window.dispatchEvent(event);
                 });
         },
     }
