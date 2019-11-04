@@ -186,8 +186,9 @@
                     instructions: 'Select an entry to link the secondary button to'|t('complete-cookie-consent'),
                     id: 'ccc_secondary-button-entry-link',
                     name: 'secondaryButtonLinkToEntry',
+                    showSiteMenu: 'auto',
                     elementType: 'craft\\elements\\Entry',
-                    elements: [settings.secondaryButtonEntry],
+                    elements: [settings.getSecondaryButtonEntry(currentSiteId)],
                     selectionLabel: 'Select an entry'|t('complete-cookie-consent'),
                     limit: 1,
                 }) }}

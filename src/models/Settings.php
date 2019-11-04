@@ -142,10 +142,10 @@ class Settings extends Model
         return $publicSettings;
     }
 
-    public function getSecondaryButtonEntry()
+    public function getSecondaryButtonEntry($siteId = null)
     {
         if (!empty($this->secondaryButtonLinkToEntry)) {
-            return Craft::$app->getElements()->getElementById($this->secondaryButtonLinkToEntry[0]);
+            return Craft::$app->getElements()->getElementById($this->secondaryButtonLinkToEntry[0], null, $siteId);
         }
 
         return null;
