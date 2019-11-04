@@ -81,6 +81,7 @@ class Plugin extends \craft\base\Plugin
             && !$request->isCpRequest
             && $settings->pluginIsActive
         ) {
+
             $this->registerAssetBundles();
 
             // If Implied Consent is allowed, set a cookie to see if the visitor has been here before
@@ -88,30 +89,6 @@ class Plugin extends \craft\base\Plugin
                 $this->cookies->countVisit();
             }
         }
-    }
-
-    protected function bannerShouldBeShown()
-    {
-        $settings = $this->getSettings();
-        $devMode = Craft::$app->getConfig()->general->devMode;
-        $ip = Craft::$app->getRequest()->userIP ?? Craft::$app->getRequest()->remoteIP;
-
-        // Implied Consent, and not first page load?
-        if ($settings->consentType === 'implied' && !$this->cookies->isFirstVisit()) {
-            return false;
-        }
-
-        // Local IP or devMode? Always show the banner
-        if (\in_array($ip, $this->localIps) || $devMode) {
-            return true;
-        }
-
-        // With the Geo API turned off, there's no way to determine if the banner should be visible. Always show it.
-        if (!$settings->useIpApi) {
-            return true;
-        }
-
-        return $this->geo->isEuropeanCountry();
     }
 
     protected function registerAssetBundles()
