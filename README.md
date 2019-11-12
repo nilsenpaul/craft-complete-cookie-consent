@@ -50,14 +50,16 @@ This is *NOT* legal advice. It's hard to find out what rules apply to your websi
 
 Cookie consent wouldn't be of much use if you wouldn't act upon the preferences of your users. That's why the `ccc` JavaScript object is set, containing the preferences of the current visitor:
 
-    console.log(ccc.consentSubmitted)
-    # prints true or false. Only true if visitor submitted their preferences
-    
-    console.log(ccc.consentImplied)
-    # prints true or false. True if consent mode is set to 'implied' and the visitor did not submit their own preferences
-    
-    console.log(ccc.consent.[cookieTypeHandle])
-    # prints true or false, depending on your visitor's choice (or the default settings, if consent mode is 'implied')
+    window.addEventListener('ccc.loaded', function(e) {
+        console.log(ccc.consentSubmitted)
+        # prints true or false. Only true if visitor submitted their preferences
+
+        console.log(ccc.consentImplied)
+        # prints true or false. True if consent mode is set to 'implied' and the visitor did not submit their own preferences
+
+        console.log(ccc.consent.[cookieTypeHandle])
+        # prints true or false, depending on your visitor's choice (or the default settings, if consent mode is 'implied')
+    });
     
 You can use these values to load (or prevent loading of) whatever you want.
 
@@ -68,6 +70,7 @@ The plugin provides a template variable, to get the current visitor's consent in
     
     {{ consentInfo.consentSubmitted }}{# <-- true or false #}
     {{ consentInfo.consent }}{# <-- An array with cookieType handles as keys, and consent status as value #}
+    {{ consentInfo.cookieTypes }}{# <-- An array containing cookie type config settings, indexed by handle #}
 
 ### Updating cookie consent preferences with your own form
 As of v1.0.1, it's possible to update consent preferences for a visitor with a form like this:
