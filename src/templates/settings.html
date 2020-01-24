@@ -275,18 +275,27 @@
                     name: 'geolocationMethod',
                     options: {
                         none: 'No geolocation, ignore the visitor\'s location' |t('complete-cookie-consent'),
-                        geoIpLite: 'Maxmind GeoIpLite' |t('complete-cookie-consent'),
+                        geoIpLite: 'Maxmind GeoIpLite (no longer supported, same as selecting none)' |t('complete-cookie-consent'),
                         ipApi: 'ipApi.com (API key required)' |t('complete-cookie-consent'),
+                        ipstack: 'ipstack.com (API key required)' |t('complete-cookie-consent'),
                     },
                     value: settings.geolocationMethod,
                 }) }}
 
                 {{ forms.textField({
                     label: 'ipApi API key' |t('complete-cookie-consent'),
-                    instructions: 'We use ipApi to lookup the visitor\'s location. Please enter your API key. If no API key is set, all visitors will see the cookie banner' |t('complete-cookie-consent'),
+                    instructions: 'Please enter your ipapi.com API key, if you selected ipapi.com as your preferred method op geolocation. If no    API key is set, all visitors will see the cookie banner' |t('complete-cookie-consent'),
                     name: 'ipApiKey',
                     value: settings.ipApiKey,
                 }) }}
+
+                {{ forms.textField({
+                    label: 'ipstack API key' |t('complete-cookie-consent'),
+                    instructions: 'Please enter your ipstack.com API key, if you selected ipstack.com as your preferred method op geolocation. If no API key is set, all visitors will see the cookie banner' |t('complete-cookie-consent'),
+                    name: 'ipstackKey',
+                    value: settings.ipstackKey,
+                }) }}
+
         </div>
     </div>
 {% endblock %}

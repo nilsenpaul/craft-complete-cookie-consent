@@ -63,7 +63,7 @@ class ConsentController extends Controller
             return false;
         }
 
-        if ($settings->geolocationMethod == 'geoIpLite' || $settings->geolocationMethod == 'ipApi') {
+        if ($settings->geolocationMethod == 'ipApi' || $settings->geolocationMethod == 'ipstack') {
             return Plugin::$instance->geo->isEuropeanCountry();
         }
 

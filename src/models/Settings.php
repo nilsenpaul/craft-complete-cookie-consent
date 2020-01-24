@@ -38,7 +38,8 @@ class Settings extends Model
     public $cookieTypes;
     public $useIpApi = false;
     public $ipApiKey;
-    public $geolocationMethod = 'geoIpLite';
+    public $ipstackKey;
+    public $geolocationMethod = 'none';
 
     protected $publicAttributes = [
         'consentType',
@@ -108,11 +109,12 @@ class Settings extends Model
             [['pluginName', 'primaryButtonText', 'primaryButtonBackgroundColor', 'primaryButtonTextColor', 'cookieTypes', 'cookieName'], 'required'],
             [['bannerPosition'], 'in', 'range' => ['top', 'left', 'bottom', 'right', 'center']],
             [['consentType'], 'in', 'range' => ['implied', 'explicit']],
-            [['geolocationMethod'], 'in', 'range' => ['none', 'geoIpLite', 'ipApi']],
+            [['geolocationMethod'], 'in', 'range' => ['none', 'ipstack', 'ipApi']],
             [['rememberFor'], 'number'],
             [[
                 'useIpApi',
                 'ipApiKey',
+                'ipstackKey',
                 'pluginIsActive',
                 'includeCss',
                 'onlyShowAdmins',

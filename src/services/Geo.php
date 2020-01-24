@@ -17,6 +17,7 @@ class Geo extends Component
     CONST GEOIPLITE_URL = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz';
  
     CONST IPAPI_URL = 'http://api.ipapi.com/';
+    CONST IPSTACK_URL = 'http://api.ipstack.com/';
 
     public function isEuropeanCountry()
     {
@@ -48,10 +49,10 @@ class Geo extends Component
             return $cached;
         }
 
-        if ($settings->geolocationMethod == 'geoIpLite') {
-            $data = $this->getGeoIpLiteData($ip);    
-        } elseif ($settings->geolocationMethod == 'ipApi' && $settings->ipApiKey != '') {
+        if ($settings->geolocationMethod == 'ipApi' && $settings->ipApiKey != '') {
             $data = $this->getIpApiData($ip);
+        } elseif ($settings->geolocationMethod == 'ipstack' && $settings->ipstackKey != '') {
+            $data = $this->getIpstackData($ip);
         }
 
         if ($doCache) {
@@ -78,10 +79,31 @@ class Geo extends Component
                 'is_eu' => $data['location']['is_eu'],
             ];
         } catch (\Exception $e) {
-            // TODO: handle error
             return [];
         }
     }
+
+    private function getIpstackData($ip)
+    {
+        $settings = Plugin::$instance->getSettings();
+
+        $client = new \GuzzleHttp\Client();
+
+        try {
+            $response = $client->request('GET', self::IPSTACK_URL . $ip . '?access_key=' . $settings->ipstackKey);
+
+            $data = json_decode($response->getBody(), true);
+
+            return [
+                'ip' => $ip,
+                'isoCode' => $data['country_code'],
+                'is_eu' => $data['location']['is_eu'],
+            ];
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
 
     private function getGeoIpLiteData($ip)
     {

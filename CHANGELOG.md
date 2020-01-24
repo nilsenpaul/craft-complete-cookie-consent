@@ -1,5 +1,12 @@
 # Complete Cookie Consent Changelog
 
+
+## 1.0.8 - 2020.01.24
+### Removed
+- Removed support for MaxMind GeoIP
+### Added
+- Added support for ipstack geolocation
+
 ## 1.0.6 - 2019.05.01
 ### Added
 - Added more (and better defined) tags and classes to the form, for your styling pleasure
