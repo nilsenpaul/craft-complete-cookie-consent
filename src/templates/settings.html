@@ -51,6 +51,14 @@
                     value: settings.consentType,
                 }) }}
 
+                {{ forms.textField({
+                    label: 'Redirect URL' |t('complete-cookie-consent'),
+                    instructions: 'Enter a valid URL if you want the plugin to redirect your visitor after cookie form submission' |t('complete-cookie-consent'),
+                    name: 'redirectUrl',
+                    value: settings.redirectUrl,
+                }) }}
+
+
                 {{ forms.lightswitchField({
                     label: 'Only show to admins' |t('complete-cookie-consent'),
                     instructions: 'Set to true if you want the banner to be shown to logged in admins only (for testing purposes)' |t('complete-cookie-consent'),

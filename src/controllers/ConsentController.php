@@ -43,6 +43,7 @@ class ConsentController extends Controller
             'isFirstVisit' => Plugin::$instance->cookies->isFirstVisit(),
             'csrfTokenName' => Craft::$app->getConfig()->general->csrfTokenName,
             'csrfTokenValue' => Craft::$app->getRequest()->csrfToken,
+            'hashedRedirectUrl' => Craft::$app->security->hashData(Plugin::$instance->getSettings(null, true)->redirectUrl),
             'bannerShouldBeShown' => $this->bannerShouldBeShown(),
         ]);
     }

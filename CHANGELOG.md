@@ -1,5 +1,8 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.8.1 - 2020.01.24
+### Added
+- Added the ability to choose a redirect URL, to redirect visitors after form submission
 
 ## 1.0.8 - 2020.01.24
 ### Removed
