@@ -9,7 +9,7 @@
             <div class="ccc-form__inner">
                 <input type="hidden" :name="csrfTokenName" :value="csrfTokenValue" />
                 <input type="hidden" name="action" value="complete-cookie-consent/consent/submit" />
-                <input type="hidden" name="redirect" :value="hashedRedirectUrl" />
+                <input v-if="hashedRedirectUrl" type="hidden" name="redirect" :value="hashedRedirectUrl" />
                 <div class="ccc-banner__label-container">
                     <label :for="'cookieType-' + type.handle" v-for="type in pluginSettings.cookieTypes" :key="type.handle" class="ccc-form__label">
                         <input v-if="type.required" type="hidden" name="cookieTypes[]" :value="type.handle" value="1" />
