@@ -45,7 +45,14 @@
         mounted: function() {
             var that = this;
             this.$api
-                .get(window.cccSiteUrl + '/actions/complete-cookie-consent/consent/banner-info')
+                .get(window.cccSiteUrl + '/actions/complete-cookie-consent/consent/banner-info', {
+                    headers: {
+                        "Accept": "*/*",
+                        "Content-Type": "application/json",
+                        "Cache-Control": "no-cache",
+                        "Pragma": "no-cache",
+                    }
+                })
                 .then(function(response) {
                     // Fill a global variable for the website to use
                     window.ccc = response.data.consentInfo;
