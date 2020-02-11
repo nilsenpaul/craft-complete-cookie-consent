@@ -37,13 +37,17 @@ class ConsentController extends Controller
 
     public function actionBannerInfo()
     {
+        $redirect = empty(Plugin::$instance->getSettings(null, true)->redirectUrl)?
+            null :
+            Craft::$app->security->hashData(Plugin::$instance->getSettings(null, true)->redirectUrl);
+
         return $this->asJson([
             'consentInfo' => Plugin::$instance->consent->getInfo(),
             'pluginSettings' => Plugin::$instance->getSettings(null, true)->forFrontend(),
             'isFirstVisit' => Plugin::$instance->cookies->isFirstVisit(),
             'csrfTokenName' => Craft::$app->getConfig()->general->csrfTokenName,
             'csrfTokenValue' => Craft::$app->getRequest()->csrfToken,
-            'hashedRedirectUrl' => Craft::$app->security->hashData(Plugin::$instance->getSettings(null, true)->redirectUrl),
+            'hashedRedirectUrl' => $redirect,
             'bannerShouldBeShown' => $this->bannerShouldBeShown(),
         ]);
     }
