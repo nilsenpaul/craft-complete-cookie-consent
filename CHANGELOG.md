@@ -1,5 +1,13 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.8.3 - 2020.02.11
+### Fixed
+- Fixed redirect bug if redirectURL was empty
+
+## 1.0.8.2 - 2020.02.11
+### Changed
+- Changed the plugin logo
+-
 ## 1.0.8.1 - 2020.01.24
 ### Added
 - Added the ability to choose a redirect URL, to redirect visitors after form submission
