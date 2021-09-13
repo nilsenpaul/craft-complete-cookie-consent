@@ -4,7 +4,7 @@ namespace nilsenpaul\cookieconsent\records;
 
 use Craft;
 
-use yii\db\ActiveRecord;
+use craft\db\ActiveRecord;
 
 class Settings extends ActiveRecord
 {
