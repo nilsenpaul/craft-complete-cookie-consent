@@ -19,7 +19,7 @@ class ConsentController extends Controller
 
         $settings = Plugin::$instance->getSettings();
         $request = Craft::$app->getRequest();
-        $checkedCookieTypes = $request->post()['cookieTypes'];
+        $checkedCookieTypes = $request->post()['cookieTypes'] ?? [];
 
         // Save new cookie settings to a cookie
         $cookieTypesWithConsent = [];
@@ -75,4 +75,3 @@ class ConsentController extends Controller
         return true;
     }
 }
-
