@@ -1,5 +1,11 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.9.1 - 2021.09.13
+### Changed
+- Changed the frontend form buttons from `input` to `button` tags
+### Fixed
+- Fix an error that occured on submitting a form with no cookie types checked
+
 ## 1.0.9 - 2021.09.13
 ### Added
 - Added a config option to ignore certain URLs when loading Complete Cookie Consent

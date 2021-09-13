@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="ccc-banner__buttons">
-                    <input type="submit" :value="pluginSettings.primaryButtonText" :style="{ backgroundColor: pluginSettings.primaryButtonBackgroundColor, color: pluginSettings.primaryButtonTextColor }" class="ccc-banner__button ccc-banner__button--primary" />
+                    <button type="submit" v-html="pluginSettings.primaryButtonText" :style="{ backgroundColor: pluginSettings.primaryButtonBackgroundColor, color: pluginSettings.primaryButtonTextColor }" class="ccc-banner__button ccc-banner__button--primary"></button>
 
                     <a :href="pluginSettings.secondaryButtonHref" v-if="pluginSettings.showSecondaryButton" :style="{ backgroundColor: pluginSettings.secondaryButtonBackgroundColor, color: pluginSettings.secondaryButtonTextColor   }" class="ccc-banner__button ccc-banner__button--secondary" v-html="pluginSettings.secondaryButtonText" :target="pluginSettings.secondaryButtonOpenInNewTab ? '_blank' : '_self'" rel="noopener nofollow">
                     </a>
