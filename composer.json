@@ -1,7 +1,7 @@
 {
   "name": "nilsenpaul/complete-cookie-consent",
   "description": "This plugin provides a complete and easy way to let your site's visitors choose the cookies you're allowed to set.",
-  "version": "1.0.8.3",
+  "version": "1.0.9",
   "type": "craft-plugin",
   "license": "proprietary",
   "authors": [

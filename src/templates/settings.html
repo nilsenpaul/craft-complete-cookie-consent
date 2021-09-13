@@ -65,6 +65,22 @@
                     name: 'onlyShowAdmins',
                     on: settings.onlyShowAdmins,
                 }) }}
+
+                {{ forms.editableTableField({
+                    id: 'ignore-for-urls',
+                    label: 'Ignore for URLs' |t('complete-cookie-consent'),
+                    required: false,
+                    instructions: 'Use this optional field to prevend Complete Cookie Consent from loading for certain URLs.' |t('complete-cookie-consent'),
+                    name: 'ignoreForUrls',
+                    rows: settings.ignoreForUrls,
+                    cols: {
+                        url: {
+                            heading: 'URL to ignore (can be a regular expression)',
+                            type: 'text',
+                            info: 'Examples: "/", "/blog/.*' |t('complete-cookie-consent'),
+                        },
+                    },
+                }) }}
             </div>
             <div id="appearance" class="hidden">
                 {{ forms.lightswitchField({

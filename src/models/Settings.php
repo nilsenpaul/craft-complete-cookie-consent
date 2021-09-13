@@ -41,6 +41,7 @@ class Settings extends Model
     public $ipstackKey;
     public $geolocationMethod = 'none';
     public $redirectUrl = '';
+    public $ignoreForUrls;
 
     protected $publicAttributes = [
         'consentType',
@@ -131,6 +132,7 @@ class Settings extends Model
                 'secondaryButtonLinkToEntry',
                 'secondaryButtonOpenInNewTab',
                 'redirectUrl',
+                'ignoreForUrls',
             ], 'safe'],
         ];
     }

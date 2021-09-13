@@ -20,7 +20,7 @@
 
                 <div class="ccc-banner__buttons">
                     <input type="submit" :value="pluginSettings.primaryButtonText" :style="{ backgroundColor: pluginSettings.primaryButtonBackgroundColor, color: pluginSettings.primaryButtonTextColor }" class="ccc-banner__button ccc-banner__button--primary" />
-                    
+
                     <a :href="pluginSettings.secondaryButtonHref" v-if="pluginSettings.showSecondaryButton" :style="{ backgroundColor: pluginSettings.secondaryButtonBackgroundColor, color: pluginSettings.secondaryButtonTextColor   }" class="ccc-banner__button ccc-banner__button--secondary" v-html="pluginSettings.secondaryButtonText" :target="pluginSettings.secondaryButtonOpenInNewTab ? '_blank' : '_self'" rel="noopener nofollow">
                     </a>
                 </div>
@@ -44,24 +44,25 @@
         },
         mounted: function() {
             var that = this;
-            this.$api
-                .get(window.cccSiteUrl + '/actions/complete-cookie-consent/consent/banner-info')
-                .then(function(response) {
-                    // Fill a global variable for the website to use
-                    window.ccc = response.data.consentInfo;
+            fetch(window.cccSiteUrl + '/actions/complete-cookie-consent/consent/banner-info')
+            .then((r) => r.json())
+            .then(function(response) {
+                console.log(response);
+                // Fill a global variable for the website to use
+                window.ccc = response.consentInfo;
 
-                    that.pluginSettings = response.data.pluginSettings; 
-                    that.isFirstVisit = response.data.isFirstVisit; 
-                    that.bannerShouldBeShown = response.data.bannerShouldBeShown; 
-                    that.csrfTokenName = response.data.csrfTokenName; 
-                    that.csrfTokenValue = response.data.csrfTokenValue; 
-                    that.hashedRedirectUrl = response.data.hashedRedirectUrl; 
-                    that.consentInfo = response.data.consentInfo; 
+                that.pluginSettings = response.pluginSettings;
+                that.isFirstVisit = response.isFirstVisit;
+                that.bannerShouldBeShown = response.bannerShouldBeShown;
+                that.csrfTokenName = response.csrfTokenName;
+                that.csrfTokenValue = response.csrfTokenValue;
+                that.hashedRedirectUrl = response.hashedRedirectUrl;
+                that.consentInfo = response.consentInfo;
 
-                    // Dispatch an event on the window element
-                    var event = new Event('ccc.loaded');
-                    window.dispatchEvent(event);
-                });
+                // Dispatch an event on the window element
+                var event = new Event('ccc.loaded');
+                window.dispatchEvent(event);
+            });
         },
     }
 </script>

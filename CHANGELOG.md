@@ -1,5 +1,12 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.8.4 - 2021.09.13
+### Added
+- Added a config option to ignore certain URLs when loading Complete Cookie Consent
+### Changed
+- Updated JS, removed potential vulnerabilities
+- Drastically reduced JS file size in frontend
+
 ## 1.0.8.3 - 2020.02.11
 ### Fixed
 - Fixed redirect bug if redirectURL was empty

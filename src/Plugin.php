@@ -58,14 +58,16 @@ class Plugin extends \craft\base\Plugin
         Event::on(
             View::class,
             View::EVENT_END_BODY,
-            function (Event $event) {
-                echo Html::tag('div', Html::tag('cookie-banner'), ['id' => 'ccc']);
+            function (Event $event) use ($settings) {
+                if (!$this->urlShouldBeIgnored($settings, Craft::$app->getRequest()->getUrl())) {
+                    echo Html::tag('div', Html::tag('cookie-banner'), ['id' => 'ccc']);
+                }
             }
         );
 
         // Register variable
         Event::on(
-            CraftVariable::class, 
+            CraftVariable::class,
             CraftVariable::EVENT_INIT,
             function (Event $event) {
                 $variable = $event->sender;
@@ -76,7 +78,7 @@ class Plugin extends \craft\base\Plugin
         // Trigger the asset bundles, if need be
         $request = Craft::$app->getRequest();
         if (
-            $this->isInstalled 
+            $this->isInstalled
             && !$request->isConsoleRequest
             && !$request->isCpRequest
             && $settings->pluginIsActive
@@ -91,6 +93,24 @@ class Plugin extends \craft\base\Plugin
         }
     }
 
+    protected function urlShouldBeIgnored(Settings $settings, String $url)
+    {
+        $ignoredUrls = $settings->ignoreForUrls;
+        if (count($ignoredUrls) > 0) {
+            foreach ($ignoredUrls as $row) {
+                if (!empty(trim($row['url']))) {
+                    $exp = str_replace('/', '\/', trim($row['url']));
+
+                    if (preg_match('/^' . $exp . '$/i', $url)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     protected function registerAssetBundles()
     {
         $settings = $this->getSettings(null, true);
@@ -99,7 +119,7 @@ class Plugin extends \craft\base\Plugin
         $view = Craft::$app->getView();
         if ($settings->includeCss) {
             $view->registerAssetBundle('nilsenpaul\\cookieconsent\\assetbundles\\CompleteCookieConsentCssAsset');
-        }  
+        }
 
         // Include JS
         $view->registerJs('var cccSiteUrl = "' . UrlHelper::siteUrl() .'"', View::POS_HEAD);
