@@ -44,6 +44,7 @@ class CookieSettings extends Model
         $this->cookieTypes = ArrayHelper::map($settings['cookieTypes'], 'handle', function ($cookieType) {
             return [
                 'name' => $cookieType['name'],
+                'description' => $cookieType['description'] ?? '',
                 'defaultOn' => (Bool)$cookieType['defaultOn'],
                 'required' => (Bool)$cookieType['required'],
             ];
