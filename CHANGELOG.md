@@ -1,5 +1,9 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.9.4 - 2021.09.15
+### Fixed
+- Fix a PHP error that occured with some versions of PHP. For real, this time.
+
 ## 1.0.9.3 - 2021.09.15
 ### Added
 - Make it possible to add a description to cookie types, and have this displayed in the cookie banner
