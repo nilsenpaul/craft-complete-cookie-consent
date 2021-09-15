@@ -1,5 +1,9 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.9.5 - 2021.09.15
+### Fixed
+- Fix a Twig error that occurs when using the craft.ccc.consentInfo variable
+
 ## 1.0.9.4 - 2021.09.15
 ### Fixed
 - Fix a PHP error that occured with some versions of PHP. For real, this time.
