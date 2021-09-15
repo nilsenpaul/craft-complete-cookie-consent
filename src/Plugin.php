@@ -96,7 +96,7 @@ class Plugin extends \craft\base\Plugin
     protected function urlShouldBeIgnored(Settings $settings, String $url)
     {
         $ignoredUrls = $settings->ignoreForUrls;
-        if (count($ignoredUrls) > 0) {
+        if ($ignoredUrls !== null && count($ignoredUrls) > 0) {
             foreach ($ignoredUrls as $row) {
                 if (!empty(trim($row['url']))) {
                     $exp = str_replace('/', '\/', trim($row['url']));
