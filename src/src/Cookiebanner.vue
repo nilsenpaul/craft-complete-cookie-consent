@@ -14,7 +14,11 @@
                     <label :for="'cookieType-' + type.handle" v-for="type in pluginSettings.cookieTypes" :key="type.handle" class="ccc-form__label">
                         <input v-if="type.required" type="hidden" name="cookieTypes[]" :value="type.handle" value="1" />
                         <input :id="'cookieType-' + type.handle" type="checkbox" name="cookieTypes[]" :value="type.handle" :checked="type.defaultOn" :disabled="type.required == 1" class="ccc-form__input" />
-                        <span class="ccc-form__label-text">{{ type.name }}</span>
+
+                        <span class="ccc-form__label-text-container">
+                            <span class="ccc-form__label-text">{{ type.name }}</span>
+                            <span v-if="type.description" class="ccc-form__label-description"><br />{{ type.description }}</span>
+                        </span>
                     </label>
                 </div>
 
@@ -47,7 +51,6 @@
             fetch(window.cccSiteUrl + '/actions/complete-cookie-consent/consent/banner-info')
             .then((r) => r.json())
             .then(function(response) {
-                console.log(response);
                 // Fill a global variable for the website to use
                 window.ccc = response.consentInfo;
 

@@ -70,24 +70,28 @@ class Settings extends Model
             [
                 'handle' => 'necessary',
                 'name' => Craft::t('complete-cookie-consent', 'Necessary'),
+                'description' => '',
                 'defaultOn' => true,
                 'required' => true,
             ],
             [
                 'handle' => 'preferences',
                 'name' => Craft::t('complete-cookie-consent', 'Preferences'),
+                'description' => '',
                 'defaultOn' => true,
                 'required' => false,
             ],
             [
                 'handle' => 'statistics',
                 'name' => Craft::t('complete-cookie-consent', 'Statistics'),
+                'description' => '',
                 'defaultOn' => false,
                 'required' => false,
             ],
             [
                 'handle' => 'marketing',
                 'name' => Craft::t('complete-cookie-consent', 'Marketing'),
+                'description' => '',
                 'defaultOn' => false,
                 'required' => false,
             ],

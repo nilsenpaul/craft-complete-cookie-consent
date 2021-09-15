@@ -13,6 +13,14 @@
         margin: 0 0 1rem 0;
     }
 
+    &__label {
+        &-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+    }
+
     &--left,
     &--right {
         label {
@@ -20,8 +28,21 @@
         }
     }
 
-    label {
-        margin: 0 0.5rem 0 0;
+    .ccc-form {
+        &__input {
+            margin-right: 0.75rem;
+        }
+
+        &__label {
+            width: 25%;
+            margin: 0 1.5rem 1rem 0;
+            display: flex;
+            align-items: flex-start;
+
+            &-description {
+                font-size: 90%;
+            }
+        }
     }
 
     &--top {
