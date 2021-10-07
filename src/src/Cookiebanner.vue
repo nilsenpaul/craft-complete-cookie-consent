@@ -47,8 +47,10 @@
             };
         },
         mounted: function() {
-            var that = this;
-            fetch(window.cccSiteUrl + '/actions/complete-cookie-consent/consent/banner-info')
+            var that = this,
+                actionUrl = window.cccSiteUrl.replace(/\/*$/, '') + '/actions/complete-cookie-consent/consent/banner-info';
+
+            fetch(actionUrl)
             .then((r) => r.json())
             .then(function(response) {
                 // Fill a global variable for the website to use
