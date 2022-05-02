@@ -1,10 +1,10 @@
-# Complete Cookie Consent plugin for Craft CMS 3.x
+# Complete Cookie Consent plugin for Craft CMS 4.x
 
 This plugin will help you comply with [EU Cookie law](https://www.privacypolicies.com/blog/eu-cookie-law/). As that law states, all European visitors of your site should not only be made aware of, but also consent to the cookies your site sets. This plugin will help you obtain consent for one or more cookie groups.
 
 ## License
 
-This plugin requires a commercial license which can be purchased through the [Craft Plugin Store](https://plugins.craftcms.com/complete-cookie-consent).  
+This plugin requires a commercial license which can be purchased through the [Craft Plugin Store](https://plugins.craftcms.com/complete-cookie-consent).
 The license fee is $29 plus $9 per subsequent year for updates (optional).
 
 ## Requirements
@@ -31,12 +31,12 @@ Using the plugin's settings page, you have total control over the appearance and
   * Change the name and expiration time for the preferences cookie
   * Change cookie types, make cookie types required or checked by default
   * Add geolocation to your cookie consent process by using an automatically downloaded GeoIpLite database, or by adding an [ipApi](https://ipapi.com/) API key: only show the banner to EU visitors
-  
+
 ![Banner screenshot](resources/img/settings-cookietypes.png)
 
 ## Usage
 
-After you've installed the plugin, and activated the cookie consent banner, the banner will be shown on your site. Depending on your setup, an external geolocation API will be used to determine if a cookie banner is needed. 
+After you've installed the plugin, and activated the cookie consent banner, the banner will be shown on your site. Depending on your setup, an external geolocation API will be used to determine if a cookie banner is needed.
 
 ![Banner screenshot](resources/img/cookie-banner.png)
 
@@ -60,14 +60,14 @@ Cookie consent wouldn't be of much use if you wouldn't act upon the preferences 
         console.log(ccc.consent.[cookieTypeHandle])
         # prints true or false, depending on your visitor's choice (or the default settings, if consent mode is 'implied')
     });
-    
+
 You can use these values to load (or prevent loading of) whatever you want.
 
 ### Cookie Consent variable
 The plugin provides a template variable, to get the current visitor's consent info:
 
     {% set consentInfo = craft.ccc.consentInfo %}
-    
+
     {{ consentInfo.consentSubmitted }}{# <-- true or false #}
     {{ consentInfo.consent }}{# <-- An array with cookieType handles as keys, and consent status as value #}
     {{ consentInfo.cookieTypes }}{# <-- An array containing cookie type config settings, indexed by handle #}
@@ -78,13 +78,13 @@ As of v1.0.1, it's possible to update consent preferences for a visitor with a f
     <form method="POST">
         <input type="hidden" name="action" value="complete-cookie-consent/consent/submit" />
         {{ csrfInput() }}
- 
+
         {% for consentType, consentStatus in craft.ccc.consentInfo.consent %}
             <label for="cookieTypes[consentType]">
                 <input type="checkbox" name="cookieTypes[]" value="{{ consentType }}"{% if consentStatus == true %} checked{% endif %} /> {{ consentType }}
             </label>
         {% endfor %}
- 
+
         <input type="submit" value="Submit" />
     </form>
 
