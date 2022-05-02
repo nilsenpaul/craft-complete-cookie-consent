@@ -14,7 +14,7 @@ use yii\web\Response;
 
 class SettingsController extends Controller
 {
-    public $allowAnonymous = ['update-ip-database'];
+    public array|int|bool $allowAnonymous = ['update-ip-database'];
 
     public function actionIndex(string $siteHandle = null): Response
     {

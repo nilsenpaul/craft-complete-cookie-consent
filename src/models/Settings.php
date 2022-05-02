@@ -63,7 +63,7 @@ class Settings extends Model
         'cookieTypes',
     ];
 
-    public function init()
+    public function init(): void
     {
         // Set default cookie types
         $this->cookieTypes = [
@@ -108,7 +108,7 @@ class Settings extends Model
         $this->primaryButtonTextColor = $this->bannerButtonTextColor;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['bannerColor', 'primaryButtonBackgroundColor', 'primaryButtonTextColor'], ColorValidator::class],

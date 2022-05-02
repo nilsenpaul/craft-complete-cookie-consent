@@ -22,8 +22,8 @@ class Plugin extends \craft\base\Plugin
 {
     public static $instance;
 
-    public $hasCpSettings = true;
-    public $hasCpSection = true;
+    public bool $hasCpSettings = true;
+    public bool $hasCpSection = true;
 
     public $localIps = ['127.0.0.1', '::1'];
 
@@ -126,7 +126,7 @@ class Plugin extends \craft\base\Plugin
         $view->registerAssetBundle('nilsenpaul\\cookieconsent\\assetbundles\\CompleteCookieConsentJsAsset');
     }
 
-    public function getSettings($siteId = null, $parseMarkdown = false)
+    public function getSettings($siteId = null, $parseMarkdown = false): ?\craft\base\Model
     {
         $settingsModel = parent::getSettings();
 
@@ -153,12 +153,12 @@ class Plugin extends \craft\base\Plugin
         return $settingsModel;
     }
 
-    protected function createSettingsModel()
+    protected function createSettingsModel(): ?\craft\base\Model
     {
         return new Settings();
     }
 
-    public function getSettingsResponse()
+    public function getSettingsResponse(): mixed
     {
         // Redirect to the settings page
         Craft::$app->getResponse()->redirect(UrlHelper::cpUrl('complete-cookie-consent'));

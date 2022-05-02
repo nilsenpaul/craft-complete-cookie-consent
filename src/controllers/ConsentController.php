@@ -11,7 +11,7 @@ use craft\web\Controller;
 
 class ConsentController extends Controller
 {
-    public $allowAnonymous = ['submit', 'banner-info'];
+    public array|int|bool $allowAnonymous = ['submit', 'banner-info'];
 
     public function actionSubmit()
     {

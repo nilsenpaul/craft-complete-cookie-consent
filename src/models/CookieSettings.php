@@ -17,7 +17,7 @@ class CookieSettings extends Model
     public $consent = false;
     public $cookieTypes = null;
 
-    public function init()
+    public function init(): void
     {
         $settings = Plugin::$instance->getSettings(null, true);
 

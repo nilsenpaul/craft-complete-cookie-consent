@@ -1,39 +1,40 @@
 {
-  "name": "nilsenpaul/complete-cookie-consent",
-  "description": "This plugin provides a complete and easy way to let your site's visitors choose the cookies you're allowed to set.",
-  "version": "1.0.9.5",
-  "type": "craft-plugin",
-  "license": "proprietary",
-  "authors": [
-    {
-      "name": "Paul Verheul",
-      "homepage": "https://nilsenpaul.nl"
+    "name": "nilsenpaul/complete-cookie-consent",
+    "description": "This plugin provides a complete and easy way to let your site's visitors choose the cookies you're allowed to set.",
+    "version": "1.1",
+    "type": "craft-plugin",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Paul Verheul",
+            "homepage": "https://nilsenpaul.nl"
+        }
+    ],
+    "support": {
+        "email": "info@nilsenpaul.nl",
+        "issues": "https://github.com/nilsenpaul/craft-complete-cookie-consent/issues?state=open",
+        "source": "https://github.com/nilsenpaul/craft-complete-cookie-consent",
+        "docs": "https://github.com/nilsenpaul/craft-complete-cookie-consent/blob/master/README.md"
+    },
+    "require": {
+        "craftcms/cms": "^4.0",
+        "geoip2/geoip2": "~2.0",
+        "php": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "nilsenpaul\\cookieconsent\\": "src/"
+        }
+    },
+    "extra": {
+        "handle": "complete-cookie-consent",
+        "name": "Complete Cookie Consent",
+        "hasSettings": true,
+        "documentationUrl": "https://github.com/nilsenpaul/craft-complete-cookie-consent/blob/master/README.md",
+        "components": {
+            "consent": "nilsenpaul\\cookieconsent\\services\\Consent",
+            "cookies": "nilsenpaul\\cookieconsent\\services\\Cookies",
+            "geo": "nilsenpaul\\cookieconsent\\services\\Geo"
+        }
     }
-  ],
-  "support": {
-    "email": "info@nilsenpaul.nl",
-    "issues": "https://github.com/nilsenpaul/craft-complete-cookie-consent/issues?state=open",
-    "source": "https://github.com/nilsenpaul/craft-complete-cookie-consent",
-    "docs": "https://github.com/nilsenpaul/craft-complete-cookie-consent/blob/master/README.md"
-  },
-  "require": {
-    "craftcms/cms": "^3.0.0",
-    "geoip2/geoip2": "~2.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "nilsenpaul\\cookieconsent\\": "src/"
-    }
-  },
-  "extra": {
-    "handle": "complete-cookie-consent",
-    "name": "Complete Cookie Consent",
-    "hasSettings": true,
-    "documentationUrl": "https://github.com/nilsenpaul/craft-complete-cookie-consent/blob/master/README.md",
-    "components": {
-      "consent": "nilsenpaul\\cookieconsent\\services\\Consent",
-      "cookies": "nilsenpaul\\cookieconsent\\services\\Cookies",
-      "geo": "nilsenpaul\\cookieconsent\\services\\Geo"
-    }
-  }
 }
