@@ -68,6 +68,9 @@
 
                 {{ forms.editableTableField({
                     id: 'ignore-for-urls',
+                    allowAdd: true,
+                    allowDelete: true,
+                    allowReorder: true,
                     label: 'Ignore for URLs' |t('complete-cookie-consent'),
                     required: false,
                     instructions: 'Use this optional field to prevend Complete Cookie Consent from loading for certain URLs.' |t('complete-cookie-consent'),
@@ -261,6 +264,9 @@
 
                 {{ forms.editableTableField({
                     id: 'cookie-types',
+                    allowAdd: true,
+                    allowDelete: true,
+                    allowReorder: true,
                     label: 'Cookie types' |t('complete-cookie-consent'),
                     required: true,
                     instructions: 'For what cookie groups can your visitors give consent?' |t('complete-cookie-consent'),
