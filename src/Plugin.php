@@ -122,7 +122,7 @@ class Plugin extends \craft\base\Plugin
         }
 
         // Include JS
-        $view->registerJs('var cccSiteUrl = "' . UrlHelper::siteUrl() . '"', View::POS_HEAD);
+        $view->registerJs('var cccSiteUrl = "' . UrlHelper::baseSiteUrl() . '"', View::POS_HEAD);
         $view->registerAssetBundle('nilsenpaul\\cookieconsent\\assetbundles\\CompleteCookieConsentJsAsset');
     }
 
