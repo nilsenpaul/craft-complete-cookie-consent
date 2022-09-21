@@ -122,7 +122,7 @@ class Plugin extends \craft\base\Plugin
         }
 
         // Include JS
-        $view->registerJs('var cccSiteUrl = "' . UrlHelper::siteUrl() .'"', View::POS_HEAD);
+        $view->registerJs('var cccSiteUrl = "' . UrlHelper::siteUrl() . '"', View::POS_HEAD);
         $view->registerAssetBundle('nilsenpaul\\cookieconsent\\assetbundles\\CompleteCookieConsentJsAsset');
     }
 
@@ -161,6 +161,6 @@ class Plugin extends \craft\base\Plugin
     public function getSettingsResponse(): mixed
     {
         // Redirect to the settings page
-        Craft::$app->getResponse()->redirect(UrlHelper::cpUrl('complete-cookie-consent'));
+        return Craft::$app->getResponse()->redirect(UrlHelper::cpUrl('complete-cookie-consent'));
     }
 }
