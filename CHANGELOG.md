@@ -1,5 +1,10 @@
 # Complete Cookie Consent Changelog
 
+## 1.0.9.6 - 2023.10.31
+### Changed
+- Removed CSRF validation from Consent Controller
+- Removed flash message after setting consent
+
 ## 1.0.9.5 - 2021.09.15
 ### Fixed
 - Fix a Twig error that occurs when using the craft.ccc.consentInfo variable

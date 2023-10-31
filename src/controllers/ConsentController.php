@@ -12,6 +12,7 @@ use craft\web\Controller;
 class ConsentController extends Controller
 {
     public $allowAnonymous = ['submit', 'banner-info'];
+    public $enableCsrfValidation = false;
 
     public function actionSubmit()
     {
@@ -30,7 +31,6 @@ class ConsentController extends Controller
         }
 
         Plugin::$instance->cookies->setConsentCookie($cookieTypesWithConsent);
-        Craft::$app->getSession()->setNotice(Craft::t('complete-cookie-consent', 'Cookie preferences have been saved'));
 
         return $this->redirectToPostedUrl();
     }
