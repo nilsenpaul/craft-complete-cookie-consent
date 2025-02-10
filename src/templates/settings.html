@@ -1,336 +1,326 @@
 {% import "_includes/forms" as forms %}
 
-{% extends '_layouts/cp' %}
+{% js %}
+new Craft.CP.Form('#main-form', {
+    redirectOnSuccess: false
+});
+{% endjs %}
 
-{% set title = 'Complete Cookie Consent' |t %}
-{% set fullPageForm = true %}
+{{ csrfInput() }}
+<input type="hidden" name="action" value="complete-cookie-consent/settings/save">
+<input type="hidden" name="siteId" value="{{ currentSiteId }}">
 
-{% block contextMenu %}
-    {% include 'complete-cookie-consent/_includes/site-settings' %}
-{% endblock %}
-
-{% block actionButton %}
-    <div class="btngroup">
-        <input type="submit" class="btn submit" value="{{ 'Save'|t('app') }}">
-    </div>
-{% endblock %}
-
-{% block content %}
-    <input type="hidden" name="action" value="complete-cookie-consent/settings/save">
-    <input type="hidden" name="siteId" value="{{ currentSiteId }}">
-
-    <div id="fields">
-        <div>
-            <div id="general">
-                {{ forms.lightswitchField({
-                    first: true,
-                    label: 'Activate cookie consent' |t('complete-cookie-consent'),
-                    instructions: 'Use this setting to toggle this plugin off and on' |t('complete-cookie-consent'),
-                    name: 'pluginIsActive',
-                    on: settings.pluginIsActive,
-                }) }}
+<div id="fields">
+    <div>
+        <div id="general">
+            {{ forms.lightswitchField({
+                first: true,
+                label: 'Activate cookie consent' |t('complete-cookie-consent'),
+                instructions: 'Use this setting to toggle this plugin off and on' |t('complete-cookie-consent'),
+                name: 'pluginIsActive',
+                on: settings.pluginIsActive,
+            }) }}
 
 
-                {{ forms.textField({
-                    label: 'Plugin name' |t('complete-cookie-consent'),
-                    instructions: 'Use this field to change the displayed name of the plugin' |t('complete-cookie-consent'),
-                    name: 'pluginName',
-                    value: settings.pluginName,
-                }) }}
+            {{ forms.textField({
+                label: 'Plugin name' |t('complete-cookie-consent'),
+                instructions: 'Use this field to change the displayed name of the plugin' |t('complete-cookie-consent'),
+                name: 'pluginName',
+                value: settings.pluginName,
+            }) }}
 
 
-                {{ forms.selectField({
-                    label: 'Consent mode' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'Should the consent be implied or explicit (with implied consent, the cookie banner will only be shown on the first page load of every visitor)' |t('complete-cookie-consent'),
-                    name: 'consentType',
-                    options: {
-                        implied: 'Implied' |t('complete-cookie-consent'),
-                        explicit: 'Explicit' |t('complete-cookie-consent'),
+            {{ forms.selectField({
+                label: 'Consent mode' |t('complete-cookie-consent'),
+                required: true,
+                instructions: 'Should the consent be implied or explicit (with implied consent, the cookie banner will only be shown on the first page load of every visitor)' |t('complete-cookie-consent'),
+                name: 'consentType',
+                options: {
+                    implied: 'Implied' |t('complete-cookie-consent'),
+                    explicit: 'Explicit' |t('complete-cookie-consent'),
+                },
+                value: settings.consentType,
+            }) }}
+
+            {{ forms.textField({
+                label: 'Redirect URL' |t('complete-cookie-consent'),
+                instructions: 'Enter a valid URL if you want the plugin to redirect your visitor after cookie form submission' |t('complete-cookie-consent'),
+                name: 'redirectUrl',
+                value: settings.redirectUrl,
+            }) }}
+
+
+            {{ forms.lightswitchField({
+                label: 'Only show to admins' |t('complete-cookie-consent'),
+                instructions: 'Set to true if you want the banner to be shown to logged in admins only (for testing purposes)' |t('complete-cookie-consent'),
+                name: 'onlyShowAdmins',
+                on: settings.onlyShowAdmins,
+            }) }}
+
+            {{ forms.editableTableField({
+                id: 'ignore-for-urls',
+                allowAdd: true,
+                allowDelete: true,
+                allowReorder: true,
+                label: 'Ignore for URLs' |t('complete-cookie-consent'),
+                required: false,
+                instructions: 'Use this optional field to prevend Complete Cookie Consent from loading for certain URLs.' |t('complete-cookie-consent'),
+                name: 'ignoreForUrls',
+                rows: settings.ignoreForUrls,
+                cols: {
+                    url: {
+                        heading: 'URL to ignore (can be a regular expression)',
+                        type: 'text',
+                        info: 'Examples: "/", "/blog/.*' |t('complete-cookie-consent'),
                     },
-                    value: settings.consentType,
-                }) }}
+                },
+            }) }}
+        </div>
+        <div id="appearance" class="hidden">
+            {{ forms.lightswitchField({
+                first: true,
+                label: 'Include CSS' |t('complete-cookie-consent'),
+                instructions: 'Set to true if you want some base CSS to be loaded for the banner, of set to false if you use your own CSS' |t('complete-cookie-consent'),
+                name: 'includeCss',
+                on: settings.includeCss,
+            }) }}
 
-                {{ forms.textField({
-                    label: 'Redirect URL' |t('complete-cookie-consent'),
-                    instructions: 'Enter a valid URL if you want the plugin to redirect your visitor after cookie form submission' |t('complete-cookie-consent'),
-                    name: 'redirectUrl',
-                    value: settings.redirectUrl,
-                }) }}
+            {{ forms.selectField({
+                label: 'Banner position' |t('complete-cookie-consent'),
+                required: true,
+                instructions: 'Where should the banner be positioned?' |t('complete-cookie-consent'),
+                name: 'bannerPosition',
+                options: {
+                    top: 'Top' |t('complete-cookie-consent'),
+                    right: 'Right' |t('complete-cookie-consent'),
+                    bottom: 'Bottom' |t('complete-cookie-consent'),
+                    left: 'Left' |t('complete-cookie-consent'),
+                    center: 'Center' |t('complete-cookie-consent'),
+                },
+                value: settings.bannerPosition,
+            }) }}
 
-
-                {{ forms.lightswitchField({
-                    label: 'Only show to admins' |t('complete-cookie-consent'),
-                    instructions: 'Set to true if you want the banner to be shown to logged in admins only (for testing purposes)' |t('complete-cookie-consent'),
-                    name: 'onlyShowAdmins',
-                    on: settings.onlyShowAdmins,
-                }) }}
-
-                {{ forms.editableTableField({
-                    id: 'ignore-for-urls',
-                    allowAdd: true,
-                    allowDelete: true,
-                    allowReorder: true,
-                    label: 'Ignore for URLs' |t('complete-cookie-consent'),
-                    required: false,
-                    instructions: 'Use this optional field to prevend Complete Cookie Consent from loading for certain URLs.' |t('complete-cookie-consent'),
-                    name: 'ignoreForUrls',
-                    rows: settings.ignoreForUrls,
-                    cols: {
-                        url: {
-                            heading: 'URL to ignore (can be a regular expression)',
-                            type: 'text',
-                            info: 'Examples: "/", "/blog/.*' |t('complete-cookie-consent'),
-                        },
-                    },
-                }) }}
-            </div>
-            <div id="appearance" class="hidden">
-                {{ forms.lightswitchField({
-                    first: true,
-                    label: 'Include CSS' |t('complete-cookie-consent'),
-                    instructions: 'Set to true if you want some base CSS to be loaded for the banner, of set to false if you use your own CSS' |t('complete-cookie-consent'),
-                    name: 'includeCss',
-                    on: settings.includeCss,
-                }) }}
-
-                {{ forms.selectField({
-                    label: 'Banner position' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'Where should the banner be positioned?' |t('complete-cookie-consent'),
-                    name: 'bannerPosition',
-                    options: {
-                        top: 'Top' |t('complete-cookie-consent'),
-                        right: 'Right' |t('complete-cookie-consent'),
-                        bottom: 'Bottom' |t('complete-cookie-consent'),
-                        left: 'Left' |t('complete-cookie-consent'),
-                        center: 'Center' |t('complete-cookie-consent'),
-                    },
-                    value: settings.bannerPosition,
-                }) }}
-
-                {{ forms.colorField({
-                    label: 'Banner color' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'What color should your cookie banner be?' |t('complete-cookie-consent'),
-                    name: 'bannerColor',
-                    value: settings.bannerColor,
-                }) }}
-
-            </div>
-            <div id="text" class="hidden">
-                {{ forms.textField({
-                    first: true,
-                    label: 'Banner title' |t('complete-cookie-consent'),
-                    instructions: 'Enter a banner title for this site. Can be empty, markdown allowed.' |t('complete-cookie-consent'),
-                    name: 'bannerTitle',
-                    value: settings.bannerTitle,
-                }) }}
-
-                {{ forms.textField({
-                    label: 'Banner text' |t('complete-cookie-consent'),
-                    instructions: 'Enter a banner text for this site. Can be empty, markdown allowed.' |t('complete-cookie-consent'),
-                    name: 'bannerText',
-                    value: settings.bannerText,
-                    rows: 2,
-                }) }}
-
-                {#
-                {{ forms.textField({
-                    label: '"Toggle all" text' |t('complete-cookie-consent'),
-                    instructions: 'The text shown next to the toggle all checkbox' |t('complete-cookie-consent'),
-                    name: 'toggleAllText',
-                    value: settings.toggleAllText,
-                }) }}
-                #}
-
-            </div>
-
-            <div id="buttons" class="hidden">
-                <h2>{{ 'Primary button' |t('complete-cookie-consent') }}</h2>
-                <p>{{ 'The primary button can not be switched off, as it\'s needed to confirm a visitor\'s consent' |t('complete-cookie-consent') }}</p>
-
-                {{ forms.textField({
-                    label: 'Primary button text' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'The text on the banner\'s primary button' |t('complete-cookie-consent'),
-                    name: 'primaryButtonText',
-                    value: settings.primaryButtonText,
-                }) }}
-
-                {{ forms.colorField({
-                    label: 'Primary button color' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'What color should the primary button be?' |t('complete-cookie-consent'),
-                    name: 'primaryButtonBackgroundColor',
-                    value: settings.primaryButtonBackgroundColor,
-                }) }}
-
-                {{ forms.colorField({
-                    label: 'Primary button text color' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'What color should the primary button text be?' |t('complete-cookie-consent'),
-                    name: 'primaryButtonTextColor',
-                    value: settings.primaryButtonTextColor,
-                }) }}
-
-                <h2>{{ 'Secondary button' |t('complete-cookie-consent') }}</h2>
-                <p>{{ 'With the (optional) secondary button, you can redirect your visitor to an entry or url' |t('complete-cookie-consent') }}</p>
-
-                {{ forms.lightswitchField({
-                    label: 'Display secondary button' |t('complete-cookie-consent'),
-                    instructions: 'Toggle the visibility of the secondary button' |t('complete-cookie-consent'),
-                    name: 'showSecondaryButton',
-                    on: settings.showSecondaryButton,
-                }) }}
-
-                {{ forms.textField({
-                    label: 'Secondary button text' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'The text on the banner\'s secondary button' |t('complete-cookie-consent'),
-                    name: 'secondaryButtonText',
-                    value: settings.secondaryButtonText,
-                }) }}
-
-                {{ forms.colorField({
-                    label: 'Secondary button color' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'What color should the secondary button be?' |t('complete-cookie-consent'),
-                    name: 'secondaryButtonBackgroundColor',
-                    value: settings.secondaryButtonBackgroundColor,
-                }) }}
-
-                {{ forms.colorField({
-                    label: 'Secondary button text color' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'What color should the secondary button text be?' |t('complete-cookie-consent'),
-                    name: 'secondaryButtonTextColor',
-                    value: settings.secondaryButtonTextColor,
-                }) }}
-
-                {{ forms.elementSelectField({
-                    label: 'Secondary button link to entry ...'|t('complete-cookie-consent'),
-                    instructions: 'Select an entry to link the secondary button to'|t('complete-cookie-consent'),
-                    id: 'ccc_secondary-button-entry-link',
-                    name: 'secondaryButtonLinkToEntry',
-                    showSiteMenu: 'auto',
-                    elementType: 'craft\\elements\\Entry',
-                    elements: [settings.getSecondaryButtonEntry(currentSiteId)],
-                    selectionLabel: 'Select an entry'|t('complete-cookie-consent'),
-                    limit: 1,
-                }) }}
-
-                {{ forms.textField({
-                    label: '... or secondary button link' |t('complete-cookie-consent'),
-                    type: 'url',
-                    instructions: 'Enter a valid url, or a relative path to wherever you want the secondary button to point to' |t('complete-cookie-consent'),
-                    name: 'secondaryButtonLink',
-                    value: settings.secondaryButtonLink,
-                }) }}
-
-                {{ forms.lightswitchField({
-                    label: 'Open link in new tab' |t('complete-cookie-consent'),
-                    name: 'secondaryButtonOpenInNewTab',
-                    on: settings.secondaryButtonOpenInNewTab,
-                }) }}
-            </div>
-            <div id="cookies" class="hidden">
-                {{ forms.textField({
-                    first: true,
-                    label: 'Cookie name' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'The name of the cookie we use to store cookie preferences' |t('complete-cookie-consent'),
-                    name: 'cookieName',
-                    value: settings.cookieName,
-                    warning: 'Changing this would mean that all previous cookie preferences will be "forgotten"' |t('complete-cookie-consent'),
-                }) }}
-
-                {{ forms.textField({
-                    label: 'Remember visitor settings for ...' |t('complete-cookie-consent'),
-                    instructions: 'How long will the visitor\'s browser remember cookie preferences (in seconds)?' |t('complete-cookie-consent'),
-                    name: 'rememberFor',
-                    type: 'number',
-                    value: settings.rememberFor,
-                }) }}
-
-                {#
-                {{ forms.lightswitchField({
-                    label: 'Toggle all' |t('complete-cookie-consent'),
-                    instructions: 'Set to true if you want to allow visitors to toggle all cookie groups at once' |t('complete-cookie-consent'),
-                    name: 'showToggleAll',
-                    on: settings.showToggleAll,
-                }) }}
-                #}
-
-                {{ forms.editableTableField({
-                    id: 'cookie-types',
-                    allowAdd: true,
-                    allowDelete: true,
-                    allowReorder: true,
-                    label: 'Cookie types' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'For what cookie groups can your visitors give consent?' |t('complete-cookie-consent'),
-                    name: 'cookieTypes',
-                    rows: settings.cookieTypes,
-                    warning: 'If you change a type\'s handle, all previous preferences for that cookie type will be lost' |t('complete-cookie-consent'),
-                    cols: {
-                        handle: {
-                            heading: 'Handle',
-                            type: 'text',
-                            info: 'This cookie group\'s reference' |t('complete-cookie-consent'),
-                        },
-                        name: {
-                            heading: 'Name',
-                            type: 'text',
-                            info: 'The name for this cookie group, visible to your visitors' |t('complete-cookie-consent'),
-                        },
-                        description: {
-                            heading: 'Description',
-                            type: 'text',
-                            info: 'A description for this cookie group, visible to your visitors' |t('complete-cookie-consent'),
-                        },
-                        defaultOn: {
-                            heading: 'Default on',
-                            type: 'lightswitch',
-                            info: 'Set this to true if this cookie group is checked by default' |t('complete-cookie-consent'),
-                        },
-                        required: {
-                            heading: 'Required',
-                            type: 'lightswitch',
-                            info: 'Set this to true if the visitor should not be allowed to refuse cookies in this group' |t('complete-cookie-consent'),
-                        },
-                    },
-                }) }}
-            </div>
-            <div id="geo" class="hidden">
-                {{ forms.selectField({
-                    label: 'Geolocation method' |t('complete-cookie-consent'),
-                    required: true,
-                    instructions: 'What method should the plugin use to determine a visitor\'s country?' |t('complete-cookie-consent'),
-                    name: 'geolocationMethod',
-                    options: {
-                        none: 'No geolocation, ignore the visitor\'s location' |t('complete-cookie-consent'),
-                        geoIpLite: 'Maxmind GeoIpLite (no longer supported, same as selecting none)' |t('complete-cookie-consent'),
-                        ipApi: 'ipApi.com (API key required)' |t('complete-cookie-consent'),
-                        ipstack: 'ipstack.com (API key required)' |t('complete-cookie-consent'),
-                    },
-                    value: settings.geolocationMethod,
-                }) }}
-
-                {{ forms.textField({
-                    label: 'ipApi API key' |t('complete-cookie-consent'),
-                    instructions: 'Please enter your ipapi.com API key, if you selected ipapi.com as your preferred method op geolocation. If no    API key is set, all visitors will see the cookie banner' |t('complete-cookie-consent'),
-                    name: 'ipApiKey',
-                    value: settings.ipApiKey,
-                }) }}
-
-                {{ forms.textField({
-                    label: 'ipstack API key' |t('complete-cookie-consent'),
-                    instructions: 'Please enter your ipstack.com API key, if you selected ipstack.com as your preferred method op geolocation. If no API key is set, all visitors will see the cookie banner' |t('complete-cookie-consent'),
-                    name: 'ipstackKey',
-                    value: settings.ipstackKey,
-                }) }}
+            {{ forms.colorField({
+                label: 'Banner color' |t('complete-cookie-consent'),
+                required: true,
+                instructions: 'What color should your cookie banner be?' |t('complete-cookie-consent'),
+                name: 'bannerColor',
+                value: settings.bannerColor,
+            }) }}
 
         </div>
+        <div id="text" class="hidden">
+            {{ forms.textField({
+                first: true,
+                label: 'Banner title' |t('complete-cookie-consent'),
+                instructions: 'Enter a banner title for this site. Can be empty, markdown allowed.' |t('complete-cookie-consent'),
+                name: 'bannerTitle',
+                value: settings.bannerTitle,
+            }) }}
+
+            {{ forms.textField({
+                label: 'Banner text' |t('complete-cookie-consent'),
+                instructions: 'Enter a banner text for this site. Can be empty, markdown allowed.' |t('complete-cookie-consent'),
+                name: 'bannerText',
+                value: settings.bannerText,
+                rows: 2,
+            }) }}
+
+            {#
+            {{ forms.textField({
+                label: '"Toggle all" text' |t('complete-cookie-consent'),
+                instructions: 'The text shown next to the toggle all checkbox' |t('complete-cookie-consent'),
+                name: 'toggleAllText',
+                value: settings.toggleAllText,
+            }) }}
+            #}
+
+        </div>
+
+        <div id="buttons" class="hidden">
+            <h2>{{ 'Primary button' |t('complete-cookie-consent') }}</h2>
+            <p>{{ 'The primary button can not be switched off, as it\'s needed to confirm a visitor\'s consent' |t('complete-cookie-consent') }}</p>
+
+            {{ forms.textField({
+                label: 'Primary button text' |t('complete-cookie-consent'),
+                required: true,
+                instructions: 'The text on the banner\'s primary button' |t('complete-cookie-consent'),
+                name: 'primaryButtonText',
+                value: settings.primaryButtonText,
+            }) }}
+
+            {{ forms.colorField({
+                label: 'Primary button color' |t('complete-cookie-consent'),
+                required: true,
+                instructions: 'What color should the primary button be?' |t('complete-cookie-consent'),
+                name: 'primaryButtonBackgroundColor',
+                value: settings.primaryButtonBackgroundColor,
+            }) }}
+
+            {{ forms.colorField({
+                label: 'Primary button text color' |t('complete-cookie-consent'),
+                required: true,
+                instructions: 'What color should the primary button text be?' |t('complete-cookie-consent'),
+                name: 'primaryButtonTextColor',
+                value: settings.primaryButtonTextColor,
+            }) }}
+
+            <h2>{{ 'Secondary button' |t('complete-cookie-consent') }}</h2>
+            <p>{{ 'With the (optional) secondary button, you can redirect your visitor to an entry or url' |t('complete-cookie-consent') }}</p>
+
+            {{ forms.lightswitchField({
+                label: 'Display secondary button' |t('complete-cookie-consent'),
+                instructions: 'Toggle the visibility of the secondary button' |t('complete-cookie-consent'),
+                name: 'showSecondaryButton',
+                on: settings.showSecondaryButton,
+            }) }}
+
+            {{ forms.textField({
+                label: 'Secondary button text' |t('complete-cookie-consent'),
+                required: true,
+                instructions: 'The text on the banner\'s secondary button' |t('complete-cookie-consent'),
+                name: 'secondaryButtonText',
+                value: settings.secondaryButtonText,
+            }) }}
+
+            {{ forms.colorField({
+                label: 'Secondary button color' |t('complete-cookie-consent'),
+                required: true,
+                instructions: 'What color should the secondary button be?' |t('complete-cookie-consent'),
+                name: 'secondaryButtonBackgroundColor',
+                value: settings.secondaryButtonBackgroundColor,
+            }) }}
+
+            {{ forms.colorField({
+                label: 'Secondary button text color' |t('complete-cookie-consent'),
+                required: true,
+                instructions: 'What color should the secondary button text be?' |t('complete-cookie-consent'),
+                name: 'secondaryButtonTextColor',
+                value: settings.secondaryButtonTextColor,
+            }) }}
+
+            {{ forms.elementSelectField({
+                label: 'Secondary button link to entry ...'|t('complete-cookie-consent'),
+                instructions: 'Select an entry to link the secondary button to'|t('complete-cookie-consent'),
+                id: 'ccc_secondary-button-entry-link',
+                name: 'secondaryButtonLinkToEntry',
+                showSiteMenu: 'auto',
+                elementType: 'craft\\elements\\Entry',
+                elements: settings.getSecondaryButtonEntry(currentSiteId) ? [settings.getSecondaryButtonEntry(currentSiteId)] : null,
+                selectionLabel: 'Select an entry'|t('complete-cookie-consent'),
+                limit: 1,
+            }) }}
+
+            {{ forms.textField({
+                label: '... or secondary button link' |t('complete-cookie-consent'),
+                type: 'url',
+                instructions: 'Enter a valid url, or a relative path to wherever you want the secondary button to point to' |t('complete-cookie-consent'),
+                name: 'secondaryButtonLink',
+                value: settings.secondaryButtonLink,
+            }) }}
+
+            {{ forms.lightswitchField({
+                label: 'Open link in new tab' |t('complete-cookie-consent'),
+                name: 'secondaryButtonOpenInNewTab',
+                on: settings.secondaryButtonOpenInNewTab,
+            }) }}
+        </div>
+        <div id="cookies" class="hidden">
+            {{ forms.textField({
+                first: true,
+                label: 'Cookie name' |t('complete-cookie-consent'),
+                required: true,
+                instructions: 'The name of the cookie we use to store cookie preferences' |t('complete-cookie-consent'),
+                name: 'cookieName',
+                value: settings.cookieName,
+                warning: 'Changing this would mean that all previous cookie preferences will be "forgotten"' |t('complete-cookie-consent'),
+            }) }}
+
+            {{ forms.textField({
+                label: 'Remember visitor settings for ...' |t('complete-cookie-consent'),
+                instructions: 'How long will the visitor\'s browser remember cookie preferences (in seconds)?' |t('complete-cookie-consent'),
+                name: 'rememberFor',
+                type: 'number',
+                value: settings.rememberFor,
+            }) }}
+
+            {#
+            {{ forms.lightswitchField({
+                label: 'Toggle all' |t('complete-cookie-consent'),
+                instructions: 'Set to true if you want to allow visitors to toggle all cookie groups at once' |t('complete-cookie-consent'),
+                name: 'showToggleAll',
+                on: settings.showToggleAll,
+            }) }}
+            #}
+
+            {{ forms.editableTableField({
+                id: 'cookie-types',
+                allowAdd: true,
+                allowDelete: true,
+                allowReorder: true,
+                label: 'Cookie types' |t('complete-cookie-consent'),
+                required: true,
+                instructions: 'For what cookie groups can your visitors give consent?' |t('complete-cookie-consent'),
+                name: 'cookieTypes',
+                rows: settings.cookieTypes,
+                warning: 'If you change a type\'s handle, all previous preferences for that cookie type will be lost' |t('complete-cookie-consent'),
+                cols: {
+                    handle: {
+                        heading: 'Handle',
+                        type: 'text',
+                        info: 'This cookie group\'s reference' |t('complete-cookie-consent'),
+                    },
+                    name: {
+                        heading: 'Name',
+                        type: 'text',
+                        info: 'The name for this cookie group, visible to your visitors' |t('complete-cookie-consent'),
+                    },
+                    description: {
+                        heading: 'Description',
+                        type: 'text',
+                        info: 'A description for this cookie group, visible to your visitors' |t('complete-cookie-consent'),
+                    },
+                    defaultOn: {
+                        heading: 'Default on',
+                        type: 'lightswitch',
+                        info: 'Set this to true if this cookie group is checked by default' |t('complete-cookie-consent'),
+                    },
+                    required: {
+                        heading: 'Required',
+                        type: 'lightswitch',
+                        info: 'Set this to true if the visitor should not be allowed to refuse cookies in this group' |t('complete-cookie-consent'),
+                    },
+                },
+            }) }}
+        </div>
+        <div id="geo" class="hidden">
+            {{ forms.selectField({
+                label: 'Geolocation method' |t('complete-cookie-consent'),
+                required: true,
+                instructions: 'What method should the plugin use to determine a visitor\'s country?' |t('complete-cookie-consent'),
+                name: 'geolocationMethod',
+                options: {
+                    none: 'No geolocation, ignore the visitor\'s location' |t('complete-cookie-consent'),
+                    geoIpLite: 'Maxmind GeoIpLite (no longer supported, same as selecting none)' |t('complete-cookie-consent'),
+                    ipApi: 'ipApi.com (API key required)' |t('complete-cookie-consent'),
+                    ipstack: 'ipstack.com (API key required)' |t('complete-cookie-consent'),
+                },
+                value: settings.geolocationMethod,
+            }) }}
+
+            {{ forms.textField({
+                label: 'ipApi API key' |t('complete-cookie-consent'),
+                instructions: 'Please enter your ipapi.com API key, if you selected ipapi.com as your preferred method op geolocation. If no    API key is set, all visitors will see the cookie banner' |t('complete-cookie-consent'),
+                name: 'ipApiKey',
+                value: settings.ipApiKey,
+            }) }}
+
+            {{ forms.textField({
+                label: 'ipstack API key' |t('complete-cookie-consent'),
+                instructions: 'Please enter your ipstack.com API key, if you selected ipstack.com as your preferred method op geolocation. If no API key is set, all visitors will see the cookie banner' |t('complete-cookie-consent'),
+                name: 'ipstackKey',
+                value: settings.ipstackKey,
+            }) }}
+
     </div>
-{% endblock %}
+</div>

@@ -28,36 +28,48 @@ class SettingsController extends Controller
         // Set multisite variables
         $this->setMultiSiteVariables($siteHandle, $siteId, $variables);
 
-        // Set tabs
-        $variables['tabs'] = [
-            [
-                'label' => Craft::t('complete-cookie-consent', 'General'),
-                'url' => '#general',
-            ],
-            [
-                'label' => Craft::t('complete-cookie-consent', 'Appearance'),
-                'url' => '#appearance',
-            ],
-            [
-                'label' => Craft::t('complete-cookie-consent', 'Text'),
-                'url' => '#text',
-            ],
-            [
-                'label' => Craft::t('complete-cookie-consent', 'Buttons'),
-                'url' => '#buttons',
-            ],
-            [
-                'label' => Craft::t('complete-cookie-consent', 'Cookie settings'),
-                'url' => '#cookies',
-            ],
-            [
-                'label' => Craft::t('complete-cookie-consent', 'Geolocation'),
-                'url' => '#geo',
-            ],
-        ];
-
-        // Render the template
-        return $this->renderTemplate('complete-cookie-consent/settings', $variables);
+        // Return as CP screen
+        return $this->asCpScreen()
+            ->title($templateTitle)
+            ->action('complete-cookie-consent/settings/save')
+            ->submitButtonLabel(Craft::t('app', 'Save'))
+            ->addAltAction(
+                Craft::t('app', 'Save and continue editing'),
+                ['redirect' => 'complete-cookie-consent/settings/{handle}']
+            )
+            ->formAttributes(['id' => 'main-form', 'method' => 'post'])
+            ->tabs([
+                'general' => [
+                    'label' => Craft::t('complete-cookie-consent', 'General'),
+                    'url' => '#general',
+                ],
+                'appearance' => [
+                    'label' => Craft::t('complete-cookie-consent', 'Appearance'),
+                    'url' => '#appearance',
+                ],
+                'text' => [
+                    'label' => Craft::t('complete-cookie-consent', 'Text'),
+                    'url' => '#text',
+                ],
+                'buttons' => [
+                    'label' => Craft::t('complete-cookie-consent', 'Buttons'),
+                    'url' => '#buttons',
+                ],
+                'cookies' => [
+                    'label' => Craft::t('complete-cookie-consent', 'Cookie settings'),
+                    'url' => '#cookies',
+                ],
+                'geo' => [
+                    'label' => Craft::t('complete-cookie-consent', 'Geolocation'),
+                    'url' => '#geo',
+                ],
+            ])
+            ->contentTemplate('complete-cookie-consent/settings', $variables)
+            ->contextMenu(fn() => Craft::$app->getView()->renderTemplate(
+                'complete-cookie-consent/_includes/site-settings',
+                $variables
+            ))
+            ->fullPageForm();
     }
 
     public function actionSave()
@@ -84,11 +96,19 @@ class SettingsController extends Controller
 
             $settingsRecord->settings = json_encode($settingsModel);
             if ($settingsRecord->save()) {
-                Craft::$app->getSession()->setNotice(Craft::t('complete-cookie-consent', 'Cookie consent preferences have been saved'));
+                $this->setSuccessFlash(Craft::t('complete-cookie-consent', 'Cookie consent preferences have been saved'));
+                return $this->redirectToPostedUrl();
             }
-
-            return $this->redirectToPostedUrl();
         }
+
+        $this->setFailFlash(Craft::t('complete-cookie-consent', 'Could not save cookie consent preferences.'));
+        
+        // Send the settings back to the template
+        Craft::$app->getUrlManager()->setRouteParams([
+            'settings' => $settingsModel,
+        ]);
+
+        return null;
     }
 
     protected function populateSettingsModel($request)

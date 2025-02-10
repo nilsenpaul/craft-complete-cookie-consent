@@ -1,5 +1,14 @@
 # Complete Cookie Consent Changelog
 
+## 2.0.0 - 2024-02-10
+### Added
+- Added Craft CMS 5 compatibility
+
+### Changed
+- Updated minimum PHP requirement to 8.2
+- Updated minimum Craft CMS requirement to 5.0.0
+- Code base updated for Craft 5 compatibility using Rector
+
 ## 1.0.9.5 - 2021.09.15
 ### Fixed
 - Fix a Twig error that occurs when using the craft.ccc.consentInfo variable

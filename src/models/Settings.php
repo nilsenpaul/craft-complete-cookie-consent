@@ -155,7 +155,14 @@ class Settings extends Model
     public function getSecondaryButtonEntry($siteId = null)
     {
         if (!empty($this->secondaryButtonLinkToEntry)) {
-            return Craft::$app->getElements()->getElementById($this->secondaryButtonLinkToEntry[0], null, $siteId);
+            // Handle both array and scalar values for compatibility
+            $elementId = is_array($this->secondaryButtonLinkToEntry) 
+                ? ($this->secondaryButtonLinkToEntry[0] ?? null) 
+                : $this->secondaryButtonLinkToEntry;
+                
+            if ($elementId) {
+                return Craft::$app->getElements()->getElementById($elementId, null, $siteId);
+            }
         }
 
         return null;
