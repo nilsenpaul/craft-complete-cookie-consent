@@ -1,5 +1,9 @@
 # Complete Cookie Consent Changelog
 
+## 2.0.1 - 2026-11-06
+### Fixed
+- Fixed the settings page on multi-site installs: the site switcher now uses Craft 5's native `site`/`selectableSites` CP screen API instead of the removed `contextMenu` method, and the `site` query param is honored (fixes #52)
+
 ## 2.0.0 - 2024-02-10
 ### Added
 - Added Craft CMS 5 compatibility

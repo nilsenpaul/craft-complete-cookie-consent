@@ -7,6 +7,7 @@ use nilsenpaul\cookieconsent\models\Settings;
 use nilsenpaul\cookieconsent\records\Settings as SettingsRecord;
 
 use Craft;
+use craft\helpers\Cp;
 use craft\web\Controller;
 
 use yii\web\NotFoundHttpException;
@@ -65,10 +66,8 @@ class SettingsController extends Controller
                 ],
             ])
             ->contentTemplate('complete-cookie-consent/settings', $variables)
-            ->contextMenu(fn() => Craft::$app->getView()->renderTemplate(
-                'complete-cookie-consent/_includes/site-settings',
-                $variables
-            ))
+            ->site(Craft::$app->getSites()->getSiteById((int)$variables['currentSiteId']))
+            ->selectableSites(Craft::$app->getSites()->getEditableSites())
             ->fullPageForm();
     }
 
@@ -159,7 +158,11 @@ class SettingsController extends Controller
 
     protected function getSiteIdFromHandle($siteHandle)
     {
-        // Which site are we editing?
+        // Which site are we editing? Craft 5's site menu links with a `site` query param
+        if (Craft::$app->getRequest()->getQueryParam('site') !== null && ($site = Cp::requestedSite())) {
+            return $site->id;
+        }
+
         if ($siteHandle !== null) {
             $site = Craft::$app->getSites()->getSiteByHandle($siteHandle);
             
