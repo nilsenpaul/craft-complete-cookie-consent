@@ -1,5 +1,11 @@
 # Complete Cookie Consent Changelog
 
+## 2.0.2 - 2026-11-09
+### Security
+- Fixed a vulnerability where any control-panel user could save plugin settings, including a stored XSS payload in the site-wide banner and an arbitrary redirect URL. `SettingsController::actionSave()` now requires the `accessPlugin-complete-cookie-consent` permission (thanks @kta1kri)
+- The `update-ip-database` action is no longer anonymously accessible and now requires admin access, preventing unauthenticated file writes and remote database downloads
+- Banner title, banner text and button texts are now sanitized server-side before being rendered as HTML in the frontend, while retaining Markdown support
+
 ## 2.0.1 - 2026-11-06
 ### Fixed
 - Fixed the settings page on multi-site installs: the site switcher now uses Craft 5's native `site`/`selectableSites` CP screen API instead of the removed `contextMenu` method, and the `site` query param is honored (fixes #52)

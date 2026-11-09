@@ -15,6 +15,8 @@ use craft\web\View;
 use craft\web\twig\variables\CraftVariable;
 
 use yii\base\Event;
+use craft\helpers\HtmlPurifier;
+
 use yii\helpers\Html;
 use yii\helpers\Markdown;
 
@@ -144,10 +146,12 @@ class Plugin extends \craft\base\Plugin
             }
         }
 
-        // Markdown text fields
+        // Markdown text fields, sanitized for safe HTML output in the frontend
         if ($parseMarkdown) {
-            $settingsModel->bannerTitle = Markdown::processParagraph((string)$settingsModel->bannerTitle);
-            $settingsModel->bannerText = Markdown::processParagraph((string)$settingsModel->bannerText);
+            $settingsModel->bannerTitle = HtmlPurifier::process(Markdown::processParagraph((string)$settingsModel->bannerTitle));
+            $settingsModel->bannerText = HtmlPurifier::process(Markdown::processParagraph((string)$settingsModel->bannerText));
+            $settingsModel->primaryButtonText = HtmlPurifier::process((string)$settingsModel->primaryButtonText);
+            $settingsModel->secondaryButtonText = HtmlPurifier::process((string)$settingsModel->secondaryButtonText);
         }
 
         return $settingsModel;

@@ -15,7 +15,7 @@ use yii\web\Response;
 
 class SettingsController extends Controller
 {
-    public array|int|bool $allowAnonymous = ['update-ip-database'];
+    public array|int|bool $allowAnonymous = false;
 
     public function actionIndex(string $siteHandle = null): Response
     {
@@ -74,7 +74,8 @@ class SettingsController extends Controller
     public function actionSave()
     {
         $this->requirePostRequest();
-        
+        $this->requirePermission('accessPlugin-complete-cookie-consent');
+
         $request = Craft::$app->getRequest();
         $siteId = (int)$request->getParam('siteId');
 
@@ -180,6 +181,8 @@ class SettingsController extends Controller
 
     public function actionUpdateIpDatabase()
     {
+        $this->requireAdmin();
+
         Plugin::$instance->geo->updateGeoIpLiteDatabase();
         exit;
     }
